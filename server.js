@@ -1,0 +1,22 @@
+const express = require('express');
+const path = require('path');
+const app = express();
+const PORT = 3000;
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.engine('html', require('ejs').renderFile);
+app.set('views', __dirname);
+app.set('view engine', 'html');
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.listen(
+    PORT,
+    () => {console.log("Started server")}
+);
+
+const loginRouter = require('./routes/login');
+const registerRouter = require('./routes/register');
+app.use('/login', loginRouter);
+app.use('/register', registerRouter);
