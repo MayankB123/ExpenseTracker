@@ -4,6 +4,8 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv').config();
 const supabaseApp = require('@supabase/supabase-js')
+const { generateAccessToken, generateRefreshToken } = require('../modules/generateTokens.js')
+
 
 const supabase = supabaseApp.createClient(
     process.env.SUPABASE_URL,
@@ -24,6 +26,7 @@ router.post('/', async (req, res) => {
     .eq('email', email);
 
     if (error) {
+        console.error("Supabase error in fetching right user", error)
         return res.redirect('/login?login=server-failure')
     }
 
@@ -36,19 +39,19 @@ router.post('/', async (req, res) => {
     }
 
     else {
-    dbPassword = data[0].password;
+        const dbPassword = data[0].password;
     try {
         if (await bcrypt.compare(password, dbPassword)) {
-            
             const user = data[0];
-            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
-            res.json( {accessToken: accessToken} )
-
+            const accessToken = generateAccessToken(user);
+            const refreshToken = generateRefreshToken(user);
+            res.json({accessToken: accessToken, refreshToken: refreshToken})
         }
         else {
             return res.redirect('/login?login=client-failure');
         }
     } catch {
+        console.error("Error in comparing passwords or getting jwt", error)
         return res.redirect('/login?login=server-failure');
     }
     }    

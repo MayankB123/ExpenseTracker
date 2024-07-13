@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs')
 const dotenv = require('dotenv').config();
 const supabaseApp = require('@supabase/supabase-js')
-const { validateEmail, validatePassword} = require('../modules/validation.js')
+const { validateEmail, validatePassword} = require('../middlewares/validation.js')
 
 const supabase = supabaseApp.createClient(
     process.env.SUPABASE_URL,
@@ -14,18 +14,9 @@ router.get('/', (req, res) => {
     res.render('public/register.html');
 });
 
-router.post('/', async (req, res) => {
-    const { email, password } = req.body;
-
-    const validEmail = validateEmail(email);
-    if (!validEmail) {
-        return res.redirect('/register?error=invalid-email');
-    }
-    const validPassword = validatePassword(password);
-    if (!validPassword) {
-        return res.redirect(`/register?error=invalid-password&email=${email}`);
-    } 
-
+router.post('/', validateEmail, validatePassword, async (req, res) => {
+    const { email, password } = req.body; 
+    
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
         
