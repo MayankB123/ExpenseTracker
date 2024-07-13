@@ -7,7 +7,7 @@ function authenticateToken(req, res, next) {
     const refreshToken = req.cookies.refreshToken;
 
     if (!accessToken) {
-        return res.status(401).redirect('/login?session=expired');
+        return res.status(401).redirect('/login?session=invalid');
     }
 
     jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
@@ -29,7 +29,7 @@ function authenticateToken(req, res, next) {
                 next();
             });
         } else if (err) {
-            return res.status(403).redirect('/login?session=expired');
+            return res.status(403).redirect('/login?session=invalid');
         } else {
             req.user = user;
             next();
