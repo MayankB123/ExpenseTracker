@@ -4,13 +4,14 @@ const bcrypt = require('bcryptjs')
 const dotenv = require('dotenv').config();
 const supabaseApp = require('@supabase/supabase-js')
 const { validateEmail, validatePassword} = require('../middlewares/validation.js')
+const { clearSession } = require('../middlewares/clearSession.js')
 
 const supabase = supabaseApp.createClient(
     process.env.SUPABASE_URL,
     process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-router.get('/', (req, res) => {
+router.get('/', clearSession, (req, res) => {
     res.render('public/register.html');
 });
 
