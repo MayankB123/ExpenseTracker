@@ -3,7 +3,8 @@ const router = express.Router();
 const bcrypt = require('bcryptjs')
 const dotenv = require('dotenv').config();
 const supabaseApp = require('@supabase/supabase-js')
-const { validateEmail, validatePassword} = require('../middlewares/validation.js')
+const sanitizeHtml = require('sanitize-html');
+const { validateEmail, validatePassword, validateNickname, checkEmailAlreadyExists} = require('../middlewares/validation.js')
 const { clearSession } = require('../middlewares/clearSession.js')
 
 const supabase = supabaseApp.createClient(
@@ -15,8 +16,13 @@ router.get('/', clearSession, (req, res) => {
     res.render('public/register.html');
 });
 
-router.post('/', validateEmail, validatePassword, async (req, res) => {
-    const { email, password } = req.body; 
+router.post('/', validateEmail, validatePassword, validateNickname, checkEmailAlreadyExists, async (req, res) => {
+    const { email, nickname, password } = req.body; 
+
+    const sanitizedNickname = sanitizeHtml(nickname, {
+        allowedTags: [],
+        allowedAttributes: {},
+    });
     
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -25,6 +31,7 @@ router.post('/', validateEmail, validatePassword, async (req, res) => {
         .from('users')
         .insert({
             email: email,
+            nickname: sanitizedNickname,
             password: hashedPassword
         });
 
@@ -36,7 +43,7 @@ router.post('/', validateEmail, validatePassword, async (req, res) => {
         return res.redirect('/login?registration=success');
     } catch {
         console.log("Suwi")
-        res.redirect('/login?registration=failure');
+        return res.redirect('/login?registration=failure');
     }
 });
 
