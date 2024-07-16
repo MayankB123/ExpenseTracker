@@ -12,7 +12,7 @@ const supabase = supabaseApp.createClient(
 );
 
 router.get('/', authenticateToken, (req, res) => {
-    res.json(req.user);
+    res.render('public/dashboard.ejs', {user: req.user});
 });
 
 module.exports = router;

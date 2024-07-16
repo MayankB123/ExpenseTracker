@@ -1,0 +1,81 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+header #username {
+    font-weight: bold;
+}
+
+.dashboard {
+    display: flex;
+    flex-direction: column;
+}
+
+.summary {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.summary h2 {
+    margin: 0 0 10px 0;
+    font-size: 20px;
+}
+
+.summary p {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.widgets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.widget {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    padding: 15px;
+    width: calc(33.333% - 20px);
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.widget h3 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+}
+
+.widget .cost {
+    font-size: 20px;
+    font-weight: bold;
+}
