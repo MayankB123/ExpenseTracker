@@ -1,81 +1,92 @@
-body {
-    font-family: Arial, sans-serif;
+/* Reset some default styles */
+body, h1, h2, ul {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
     background-color: #f4f4f4;
 }
 
-.container {
-    width: 80%;
-    margin: 0 auto;
-    padding: 20px;
-}
-
+/* Header styles */
 header {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 0;
-    text-align: center;
-    border-radius: 5px;
-    margin-bottom: 20px;
+    background-color: #333;
+    color: #fff;
+    padding: 15px 0;
 }
 
-header h1 {
-    margin: 0;
-    font-size: 24px;
-}
-
-header #username {
-    font-weight: bold;
-}
-
-.dashboard {
+.header-content {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
 }
 
-.summary {
-    background-color: #ffffff;
-    border: 1px solid #dddddd;
-    border-radius: 5px;
-    padding: 15px;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.summary h2 {
-    margin: 0 0 10px 0;
-    font-size: 20px;
-}
-
-.summary p {
-    font-size: 24px;
-    font-weight: bold;
+.logo h1 {
     margin: 0;
 }
 
-.widgets {
+.nav-menu ul {
+    list-style: none;
     display: flex;
-    flex-wrap: wrap;
     gap: 20px;
 }
 
+.nav-menu a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.username {
+    color: #fff;
+}
+
+/* Main content styles */
+main {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+/* Widget styles */
 .widget {
-    background-color: #ffffff;
-    border: 1px solid #dddddd;
-    border-radius: 5px;
-    padding: 15px;
-    width: calc(33.333% - 20px);
-    box-sizing: border-box;
-    text-align: center;
+    margin-bottom: 20px;
 }
 
-.widget h3 {
-    margin: 0 0 10px 0;
-    font-size: 18px;
+.widget h2 {
+    margin-bottom: 10px;
 }
 
-.widget .cost {
-    font-size: 20px;
-    font-weight: bold;
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-menu ul {
+        flex-direction: column;
+        gap: 10px;
+    }
 }

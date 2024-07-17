@@ -14,7 +14,7 @@ const supabase = supabaseApp.createClient(
 );
 
 router.get('/', clearSession, (req, res) => {
-    res.render('public/login.html');
+    res.render('public/login.ejs');
 });
 
 router.post('/', async (req, res) => {

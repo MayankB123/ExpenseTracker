@@ -13,7 +13,7 @@ const supabase = supabaseApp.createClient(
 );
 
 router.get('/', clearSession, (req, res) => {
-    res.render('public/register.html');
+    res.render('public/register.ejs');
 });
 
 router.post('/', validateEmail, validatePassword, validateNickname, checkEmailAlreadyExists, async (req, res) => {

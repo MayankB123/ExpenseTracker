@@ -1,40 +1,50 @@
 <!DOCTYPE html>
 
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="css/dashboard.css">
-    </head>
-    <body>
-        <div class="container">
-            <header>
-                <h1>Hello, <span id="username"><%= locals.user.email %></span>!</h1>
-            </header>
-            <section class="dashboard">
-                <div class="summary">
-                    <h2>Overall Cost</h2>
-                    <p id="overall-cost">$0.00</p>
-                </div>
-                <div class="widgets">
-                    <div class="widget">
-                        <h3>Service 1</h3>
-                        <p class="cost">$50.00</p>
-                    </div>
-                    <div class="widget">
-                        <h3>Service 2</h3>
-                        <p class="cost">$30.00</p>
-                    </div>
-                    <div class="widget">
-                        <h3>Service 3</h3>
-                        <p class="cost">$20.00</p>
-                    </div>
-                </div>
-            </section>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="./css/dashboard.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <h1>App Name</h1>
+            </div>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="#">Dashboard</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Billing</a></li>
+                    <li><a href="#">Settings</a></li>
+                </ul>
+            </nav>
+            <div class="user-profile">
+                <img src="profile.jpg" alt="Profile Picture" class="profile-pic">
+                <span class="username"><%= locals.user.nickname %></span>
+            </div>
         </div>
-        <script src="script.js"></script>
-    </body>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <section class="dashboard-summary">
+            <div class="widget">
+                <h2>Service Usage</h2>
+                <div id="service-usage-chart"></div>
+            </div>
+            <div class="widget">
+                <h2>Billing Overview</h2>
+                <div id="billing-overview-chart"></div>
+            </div>
+        </section>
+
+        <!-- More content can go here -->
+    </main>
+
+    <script src="./js/dashboard.js"></script>
+</body>
 </html>
