@@ -26,3 +26,5 @@ app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);
 app.use('/register', registerRouter);
 app.use('/dashboard', dashboardRouter);
+
+// Currency conversion API - https://api.exchangerate-api.com/v4/latest/${currency e.g. 'usd'}
