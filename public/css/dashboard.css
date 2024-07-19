@@ -71,15 +71,6 @@ main {
     }
 }
 
-/* Widget styles */
-.widget {
-    margin-bottom: 20px;
-}
-
-.widget h2 {
-    margin-bottom: 10px;
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
     .header-content {
