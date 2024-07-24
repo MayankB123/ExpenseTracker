@@ -18,7 +18,6 @@ router.get('/', clearSession, (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-
     const { email, password } = req.body;
     
     const { data, error } = await supabase
@@ -49,20 +48,22 @@ router.post('/', async (req, res) => {
 
             res.cookie('accessToken', accessToken, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === 'production', 
-                sameSite: 'Strict', 
+                secure: false, 
+                sameSite: 'Strict',
                 });
             
             res.cookie('refreshToken', refreshToken, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
+                secure: false,
                 sameSite: 'Strict', 
                 });
+            
+            // process.env.NODE_ENV === 'production'
 
-            res.redirect('/dashboard')
+            res.status(200).redirect('/dashboard')
         }
         else {
-            return res.redirect('/login?login=client-failure');
+            return res.status(403).redirect('/login?login=client-failure');
         }
     } catch {
         console.error("Error in comparing passwords or getting jwt", error)

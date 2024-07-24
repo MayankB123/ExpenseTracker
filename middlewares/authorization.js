@@ -17,7 +17,7 @@ function authenticateToken(req, res, next) {
                     return res.status(403).redirect('/login?session=expired');
                 }
 
-                const newAccessToken = jwt.sign({ email: user.email, nickname: user.nickname }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s' });
+                const newAccessToken = jwt.sign({ id: user.id, email: user.email, nickname: user.nickname }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s' });
 
                 res.cookie('accessToken', newAccessToken, {
                     httpOnly: true,

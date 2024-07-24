@@ -35,8 +35,37 @@ router.post('/', validateEmail, validatePassword, validateNickname, checkEmailAl
             password: hashedPassword
         });
 
+        const { data, error2 } = await supabase
+        .from('users')
+        .select()
+        .eq('email', email);
+
+        if (data.length === 0) {
+            return res.status(400).redirect('/login?login=client-failure')
+        }
+    
+        else if (data.length > 1) {
+            return res.status(400).redirect('/login?login=client-failure')
+        }
+
+        const user_ID = data[0].id;
+
+        const { error3 } = await supabase
+        .from('monthly-budget')
+        .insert({ user_id: user_ID, amount: 1000 })
+
+        if (error3) {
+            console.error(`Error setting monthly budget: `, error);
+            return res.redirect('/login?registration=failure');
+        }
+
         if (error) {
-            console.log(error);
+            console.error(error);
+            return res.redirect('/login?registration=failure');
+        }
+
+        if (error2) {
+            console.error(error2);
             return res.redirect('/login?registration=failure');
         }
 
