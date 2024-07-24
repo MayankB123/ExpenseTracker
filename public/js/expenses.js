@@ -65,20 +65,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         const dataReference = chartData.data.datasets[0].data;
         const colorReference = chartData.data.datasets[0].backgroundColor;
 
-        // Aggregating expenses by category
         const expenseMap = {};
         let amount = 0;
 
         expenses.forEach(item => {
             if (expenseMap[item.category]) {
-                expenseMap[item.category] += item.amount;
+                expenseMap[item.category] += item.amount.toFixed(2);
             } else {
-                expenseMap[item.category] = item.amount;
+                expenseMap[item.category] = item.amount.toFixed(2);
             }
             amount += item.amount;
         });
 
-        // Adding data to chart
         Object.keys(expenseMap).forEach((category, index) => {
             labelsReference.push(category);
             dataReference.push(expenseMap[category]);
@@ -99,16 +97,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         
-        // Create the pie chart
         const expensesChart = new Chart(ctx, chartData);
         expensesChart.update();
 
-        const tableBody = document.getElementById('expenseTableBody'); // Getting the table body element
+        const tableBody = document.getElementById('expenseTableBody'); 
 
-        // Clear the table body
         tableBody.innerHTML = '';
 
-        // Iterate over the expenses array
         expenses.forEach(item => {
             const row = document.createElement('tr');
 
@@ -132,7 +127,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
     } catch (error) {
-        // Handle any errors that occurred during the fetch
         console.error('Error fetching expenses:', error);
         const container = document.getElementById('expenses-container');
         container.innerHTML = '<p>Failed to load expenses. Please try again later.</p>';
