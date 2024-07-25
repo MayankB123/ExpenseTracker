@@ -56,4 +56,4 @@ async function retrieveMonthlyBudget(user) {
     return data;
 }
 
-module.exports = {retrieveExpenses, retrieveMonthlyBudget}
+module.exports = {retrieveExpenses, retrieveIncome, retrieveMonthlyBudget}

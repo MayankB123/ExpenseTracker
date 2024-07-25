@@ -34,4 +34,31 @@ async function insertExpense(user, category, description, amount) {
     return true;
 }
 
-module.exports = {insertExpense}
+async function insertIncome(user, category, description, amount) {
+    const categories = ['Salary', 'Side Hustle', 'Passive Income', 'Investments', 'Pension']
+    const userID = parseInt(user.id);
+
+    if (!(categories.includes(category))) {
+        return false;
+    }
+
+    amount = parseFloat(amount);
+
+    try {
+        const { error } = await supabase
+                .from('income')
+                .insert({ user_id: userID, category: category, amount: amount, description: description })
+
+        if (error) {
+            console.error(`Error inserting income: `, error);
+            return false;
+        }
+    } catch (error) {
+        console.error('Error inserting income:', error.message);
+        return false;
+    }
+
+    return true;
+}
+
+module.exports = {insertExpense, insertIncome}
