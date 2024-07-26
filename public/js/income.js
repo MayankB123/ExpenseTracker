@@ -1,11 +1,12 @@
 const categories = ['Salary', 'Side Hustle', 'Passive Income', 'Investments', 'Pension']
-const backgroundColors = ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)']
-const borderColors = ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)']
+const backgroundColors = ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)']
+const borderColors = ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)']
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 let incomes;
 
 document.addEventListener('DOMContentLoaded', async () => {
 
-    try {
+    try {        
         const incomeResponse = await fetch('/api/income');
 
         if (!incomeResponse.ok) {
@@ -40,101 +41,190 @@ document.addEventListener('DOMContentLoaded', async () => {
             tableBody.appendChild(row);
         });
 
-        const getDaysInMonth = (year, month) => {
-            const date = new Date(year, month, 1);
-            const days = [];
-            while (date.getMonth() === month) {
-                days.push(new Date(date).getDate().toString().padStart(2, '0'));
-                date.setDate(date.getDate() + 1);
+        function getDaysInMonth(year, month) {
+            const date = new Date(year, month + 1, 0);
+            return date.getDate();
+        }
+
+        const incomeMap = {};
+        let amount = 0;
+
+        incomes.forEach(item => {
+            if (incomeMap[item.category]) {
+                incomeMap[item.category] += item.amount;
+            } else {
+                incomeMap[item.category] = item.amount;
             }
-            return days;
+            amount += item.amount;
+        });
+
+        const ctx = document.getElementById('categoriesBarChart').getContext('2d');
+
+        const data = {
+            labels: [],
+            datasets: [{
+                label: 'Amount of Money',
+                data: [],
+                backgroundColor: [],
+                borderColor: [],
+                borderWidth: 1
+            }]
         };
 
-        const incomesDummy = [
-            { created_at: '2024-07-01T10:00:00Z', category: 'Salary', amount: 5000 },
-            { created_at: '2024-07-01T12:00:00Z', category: 'Side Hustle', amount: 200 },
-            { created_at: '2024-07-02T10:00:00Z', category: 'Salary', amount: 5000 },
-            { created_at: '2024-07-02T12:00:00Z', category: 'Side Hustle', amount: 150 },
-            // Add more data as needed
-        ];
-
-        year = 2024
-        month = 7;
-        
-        const categories = ['Salary', 'Side Hustle'];
-        const labelsReference = getDaysInMonth(year, month); // Function to get all days of the month
-        
-        // Initialize data structure
-        const incomeByDateAndCategory = {};
-        categories.forEach(category => {
-            incomeByDateAndCategory[category] = {};
-            labelsReference.forEach(day => {
-                incomeByDateAndCategory[category][day] = 0; // Initialize with zero
-            });
-        });
-        
-        // Populate data
-        incomesDummy.forEach(item => {
-            const date = new Date(item.created_at);
-            const day = date.getDate().toString().padStart(2, '0');
-            const category = item.category;
-            const amount = item.amount;
-        
-            if (!incomeByDateAndCategory[category]) {
-                incomeByDateAndCategory[category] = {};
-            }
-            
-            incomeByDateAndCategory[category][day] = (incomeByDateAndCategory[category][day] || 0) + amount;
+        Object.keys(incomeMap).forEach((category, index) => {
+            data.labels.push(category);
+            data.datasets[0].data.push(incomeMap[category]);
+            data.datasets[0].backgroundColor.push(backgroundColors[index % backgroundColors.length]);
+            data.datasets[0].borderColor.push(borderColors[index % borderColors.length]);
         });
 
-        const backgroundColors = ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)']; // One for each category
-        const borderColors = ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)']; // One for each category
+        console.log(data)
 
-        const datasets = categories.map((category, index) => {
-            const data = labelsReference.map(day => incomeByDateAndCategory[category][day] || 0);
-
-            return {
-                label: category,
-                data: data,
-                backgroundColor: backgroundColors[index],
-                borderColor: borderColors[index],
-                borderWidth: 1
-            };
-        });
-
-        const ctx = document.getElementById('income-bar-chart').getContext('2d');
         const myBarChart = new Chart(ctx, {
             type: 'bar',
-            data: {
-                labels: labelsReference,
-                datasets: datasets
-            },
+            data: data,
             options: {
                 responsive: true,
-                maintainAspectRatio: false, // Allow resizing the chart without maintaining aspect ratio
-                indexAxis: 'x',
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
                 scales: {
-                    x: {
-                        stacked: false,
-                        barPercentage: 0.8,
-                        categoryPercentage: 0.7
-                    },
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Amount of Money'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Categories'
+                        }
                     }
                 }
             }
         });
 
-        myBarChart.update()
 
+        const ctx2 = document.getElementById('incomeLineChart').getContext('2d');
+
+        const now = new Date();
+        const day = now.getDate()
+        const month = now.getMonth();
+        const year = now.getFullYear();
+
+        const numberOfDays = getDaysInMonth(year, month);
+
+        const dates = [];
+        const dailyIncome = [];
+        
+        for (let i = 1; i < numberOfDays + 1; i++) {
+            dates.push(`${i}`)
+        }
+
+        const map = {}
+
+        incomes.forEach(item => {
+            index = new Date(item.created_at).getDate();
+            if (map[index]) {
+                map[index] += item.amount;
+            } else{
+            map[index] = item.amount;
+            }
+        });
+
+        console.log(map)
+        amount = 0
+        for (let i = 1; i < day + 1; i++) {
+            if (map[i] != undefined) {
+                amount += map[i]
+            }
+            dailyIncome.push(amount);
+        }
+
+        const totalIncome = document.getElementById('totalIncomeAmount');
+        totalIncome.innerHTML = `$${amount.toFixed(2)}`;
+
+        const data2 = {
+            labels: dates,
+            datasets: [{
+                label: 'Total Income',
+                data: dailyIncome,
+                borderColor: 'rgba(75, 192, 192, 1)', // Line color
+                backgroundColor: 'rgba(75, 192, 192, 0.2)', // Fill color
+                borderWidth: 2,
+                tension: 0.1 // Smooth the line
+            }]
+        };
+
+        const incomeLineChart = new Chart(ctx2, {
+            type: 'line',
+            data: data2,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return `Income: $${tooltipItem.raw.toLocaleString()}`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: `Days in ${months[month]}`
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Income'
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return `$${value.toLocaleString()}`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+
+        const incomeGoalResponse = await fetch('/api/income-goal');
+        
+        if (!incomeGoalResponse.ok) {
+            throw new Error(`HTTP error! Status: ${incomeGoalResponse.status}`);
+        }
+
+        const IncomeGoalData = await incomeGoalResponse.json();
+        const incomeGoalH2 = document.getElementById('incomeGoalAmount');
+        const incomeGoalAmount = IncomeGoalData.incomeGoal
+        incomeGoalH2.innerHTML = `$${incomeGoalAmount} <span id="incomeGoalPercentage" class="income-goal-percentage">${(amount / incomeGoalAmount * 100).toFixed(2)}%</span>`
+        incomeGoalPercentage = document.getElementById('incomeGoalPercentage')
+        if ((amount / incomeGoalAmount * 100) < 40) {
+            incomeGoalPercentage.setAttribute('style', 'color: red;')
+        }
+        else if ((amount / incomeGoalAmount * 100) < 70) {
+            incomeGoalPercentage.setAttribute('style', 'color: orange;')
+        } else {
+            incomeGoalPercentage.setAttribute('style', 'color: green;')
+        }
+
+        
     } catch (error) {
         console.error('Error fetching income:', error);
     }
-
-
-
-    
 
     function convertJSONToCSV(data) {
         const header = 'Category,Description,Amount\n';

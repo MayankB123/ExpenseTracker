@@ -17,15 +17,36 @@ async function updateMonthlyBudget(user, monthlyBudget) {
             .eq('user_id', userID);
 
         if (error) {
-            console.error(`Error inserting budget: `, error);
+            console.error(`Error updating monthly budget: `, error);
             return false;
         }
     } catch (error) {
-        console.error('Error inserting monthly budget:', error.message);
+        console.error('Error updating monthly budget:', error.message);
         return false;
     }
 
     return true;
 }
 
-module.exports = {updateMonthlyBudget}
+async function updateIncomeGoal(user, incomeGoal) {
+    const userID = parseInt(user.id);
+
+    try {
+        const { error } = await supabase
+            .from('income-goal')
+            .update({ amount: incomeGoal })
+            .eq('user_id', userID);
+
+        if (error) {
+            console.error(`Error updating income goal: `, error);
+            return false;
+        }
+    } catch (error) {
+        console.error('Error updating income goal:', error.message);
+        return false;
+    }
+
+    return true;
+}
+
+module.exports = {updateMonthlyBudget, updateIncomeGoal}

@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Incomes</title>
     <link rel="stylesheet" href="./css/incomes.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
@@ -32,15 +33,25 @@
 
     <!-- Main Content -->
     <main>
+        <section class="wrapper">
+            <div class="total-expenses-label">Total Income</div>
+            <div id="totalIncomeAmount" class="total-expenses-amount"></div>
         <section class="dashboard-container">
             <section class="dashboard-summary">
-                <h2>THIS MONTH</h2>
-                <div class="total-expenses-label">Total income</div>
+                <div class="total-expenses-label">Income Sources</div>
                 <div id="totalExpensesAmount" class="total-expenses-amount"></div>
-                <div class="pie-chart-container">
-                    <canvas class="expenses-pie-chart" id="income-bar-chart" width="100" height="100"></canvas>
+                <div class="bar-chart-container">
+                    <canvas class="income-chart" id="categoriesBarChart" width="100" height="100"></canvas>
                 </div>
             </section>
+            <section class="dashboard-summary">
+                <div class="total-expenses-label">Income History</div>
+                <div id="totalExpensesAmount" class="total-expenses-amount"></div>
+                <div class="pie-chart-container">
+                    <canvas class="income-chart" id="incomeLineChart" width="100" height="80"></canvas>
+                </div>
+            </section>
+        </section>
         </section>
 
         <section class="details-container">
@@ -60,9 +71,10 @@
                 </table>
             </section>
             <section class="monthly-budget">
-                <h2>Monthly Budget</h2>
-                <h3 class="monthly-budget-amount" id="monthlyBudget"></h3>
+                <h2>Income Goal</h2>
+                <h3 class="monthly-budget-amount" id="incomeGoalAmount"></h3>
                 <div class="button-container">
+                    <button class="button" id="openIncomeGoalModalButton">Change Income Goal</button>
                     <button class="button" id="openIncomesModalButton">Add Income</button>
                     <button class="button" id="exportData">Export Income Data</button>
                 </div>
@@ -93,6 +105,18 @@
                 <input type="number" id="amount" name="amount" step="0.01" required><br><br>
     
                 <button type="submit">Add Income</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="incomeGoalModal" class="modal">
+        <div class="modal-content">
+            <span id="closeIncomeGoalModal" class="close">&times;</span>
+            <h2>Change Income Goal</h2>
+            <form id="incomeGoalForm">
+                <label for="incomeGoal">New Income Goal:</label>
+                <input type="number" id="incomeGoal" name="incomeGoal" required>
+                <button type="submit">Update Income Goal</button>
             </form>
         </div>
     </div>

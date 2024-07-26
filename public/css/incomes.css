@@ -68,6 +68,12 @@ header {
 }
 
 .dashboard-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+}
+
+.wrapper {
     padding: 20px;
     max-width: 1200px;
     margin: 0 auto;
@@ -75,6 +81,12 @@ header {
     border-radius: 8px;
     margin-top: 20px;
     margin-bottom: 20px
+}
+
+.income-summary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @media (max-width: 1300px) {
@@ -93,8 +105,8 @@ header {
 .total-expenses-label {
     text-align: center;
     margin: 10px 0 0px 0;
-    font-size: 0.8rem;
-    color: rgb(93, 93, 93);
+    font-size: 1.1rem;
+    color: rgb(67, 67, 67);
 }
 
 .total-expenses-amount {
@@ -103,14 +115,14 @@ header {
     font-size: 1.5rem;
 }
 
-.pie-chart-container {
-    width: 43%;
+.bar-chart-container {
+    width: 80%;
     max-width: 1000px;
     height: auto;
     margin: auto;
 }
 
-.expenses-pie-chart {
+.income-chart {
     width: 100%;
     height: 100%;
 }
@@ -156,6 +168,13 @@ header {
     font-weight: 300;
     margin: 40px 0 40px 0;
     font-size: 2.5rem;
+}
+
+.income-goal-percentage {
+    text-align: center;
+    font-weight: 300;
+    margin: 40px 0 40px 0;
+    font-size: 1.5rem;
 }
 
 .table-container {

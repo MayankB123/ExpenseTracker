@@ -56,4 +56,21 @@ async function retrieveMonthlyBudget(user) {
     return data;
 }
 
-module.exports = {retrieveExpenses, retrieveIncome, retrieveMonthlyBudget}
+async function retrieveIncomeGoal(user) {
+    const userID = parseInt(user.id);
+
+    const { data, error } = await supabase
+    .from('income-goal')
+    .select()
+    .eq('user_id', userID)
+    .limit(1);
+
+    if (error) {
+        console.error(error)
+        return "Failed to load data."
+    }
+
+    return data;
+}
+
+module.exports = {retrieveExpenses, retrieveIncome, retrieveMonthlyBudget, retrieveIncomeGoal}

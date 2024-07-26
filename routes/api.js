@@ -5,8 +5,8 @@ const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv').config();
 const supabaseApp = require('@supabase/supabase-js');
 const { authenticateToken } = require('../middlewares/authorization.js');
-const { retrieveExpenses, retrieveIncome, retrieveMonthlyBudget } = require('../modules/retrieveData.js');
-const { updateMonthlyBudget } = require('../modules/updateData.js')
+const { retrieveExpenses, retrieveIncome, retrieveMonthlyBudget, retrieveIncomeGoal } = require('../modules/retrieveData.js');
+const { updateMonthlyBudget, updateIncomeGoal } = require('../modules/updateData.js')
 const { insertExpense, insertIncome } = require('../modules/insertData.js')
 
 const supabase = supabaseApp.createClient(
@@ -57,6 +57,23 @@ router.post('/monthly-budget', authenticateToken, async (req, res) => {
     const monthlyBudget = parseInt(req.body.budget);
     const user = req.user;
     const result = await updateMonthlyBudget(user, monthlyBudget)
+    if (result) {
+        res.status(200).send();
+    }
+    else {
+        res.status(400).send();
+    }
+});
+
+router.get('/income-goal', authenticateToken, async (req, res) => {
+    const incomeGoal = await retrieveIncomeGoal(req.user);
+    res.status(200).json({incomeGoal: incomeGoal[0].amount});
+});
+
+router.post('/income-goal', authenticateToken, async (req, res) => {
+    const incomeGoal = parseInt(req.body.incomeGoal);
+    const user = req.user;
+    const result = await updateIncomeGoal(user, incomeGoal)
     if (result) {
         res.status(200).send();
     }
