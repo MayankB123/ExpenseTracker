@@ -127,7 +127,6 @@ header {
     border-radius: 8px;
     margin-bottom: 20px;
     height: 200px;
-    overflow-y: scroll;
     align-items: center;
     box-sizing: border-box;
 }
