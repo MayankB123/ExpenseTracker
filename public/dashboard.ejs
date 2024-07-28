@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Incomes</title>
     <link rel="stylesheet" href="./css/dashboard.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Header -->
     <header>
         <div class="header-content">
             <div class="logo">
@@ -33,12 +33,91 @@
 
     <!-- Main Content -->
     <main>
-        <section class="dashboard-summary">
-            
+        <section class="numbers-container">
+            <section class="income-number-container">
+                <div class="total-number-label">Income</div>
+                <div id="incomeNumber" class="total-number-amount"></div>
+            </section>
+            <section class="expense-number-container">
+                <div class="total-number-label">Expenses</div>
+                <div id="expensesNumber" class="total-number-amount"></div>
+            </section>
         </section>
 
-        <!-- More content can go here -->
+        <section class="dashboard-container">
+            <section class="dashboard-summary">
+                <div class="total-expenses-label">Income vs Expenses</div>
+                <div id="incomeVsExpenses" class="total-expenses-amount"></div>
+                <div class="bar-chart-container">
+                    <canvas class="income-chart" id="incomeVsExpensesBarChart" width="100" height="100"></canvas>
+                </div>
+            </section>
+            <section class="dashboard-summary">
+                <div class="total-expenses-label">Income-Expense History</div>
+                <div id="totalExpensesAmount" class="total-expenses-amount"></div>
+                <div class="pie-chart-container">
+                    <canvas class="income-chart" id="incomeLineChart" width="100" height="80"></canvas>
+                </div>
+            </section>
+        </section>
+
+        <section class="details-container">
+            <section class="loading-bar-container">
+                <h2 class="income-goal-title">Income Goal</h2>
+                <div id="incomeGoalBarAmount" class="income-goal-bar-amount"></div>
+                <div id="incomeGoalBar" class="income-goal-bar">
+                    <div id="incomeGoalProgress" class="income-goal-progress"></div>
+                </div>
+            </section>
+            <section class="monthly-budget">
+                <h2 class="income-expense-ratio-title">Income-Expense Ratio</h2>
+                <h3 class="monthly-budget-amount" id="incomeExpenseRatio"></h3>
+            </section>
+        </section>
+
     </main>
+
+    <div id="incomesModal" class="modal">
+        <div class="modal-content">
+            <span id="closeIncomesModal" class="close">&times;</span>
+            <h2>Add Income</h2>
+            <form id="incomesForm">
+                <label for="category">Category:</label>
+                <select id="category" name="category" required> 
+                    <option value="">Select a category</option>
+                    <option value="Salary">Salary</option>
+                    <option value="Side Hustle">Side Hustle</option>
+                    <option value="Passive Income">Passive Income</option>
+                    <option value="Investments">Investments</option>
+                    <option value="Pension">Pension</option>
+                </select><br>
+    
+                <label for="description">Description:</label>
+                <input type="text" id="description" name="description" maxlength="100" required><br><br>
+    
+                <label for="amount">Amount:</label>
+                <input type="number" id="amount" name="amount" step="0.01" required><br><br>
+    
+                <button type="submit">Add Income</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="incomeGoalModal" class="modal">
+        <div class="modal-content">
+            <span id="closeIncomeGoalModal" class="close">&times;</span>
+            <h2>Change Income Goal</h2>
+            <form id="incomeGoalForm">
+                <label for="incomeGoal">New Income Goal:</label>
+                <input type="number" id="incomeGoal" name="incomeGoal" required>
+                <button type="submit">Update Income Goal</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="notification" class="notification hidden">
+        <span class="notification-message">Income successfully updated!</span>
+    </div>
 
     <script src="./js/dashboard.js"></script>
 </body>
