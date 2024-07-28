@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
         if (amount < monthlyBudget) {
-            dataReference.push(monthlyBudget - amount);
+            dataReference.push((monthlyBudget - amount).toFixed(2));
             labelsReference.push('Leftover');
             colorReference.push(grey);
             textColor = 'green';
