@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verification</title>
+    <link rel="stylesheet" href="css/verification.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Email Verification</h1>
+        <p>An email has been sent to your address with a verification code. Please enter the code below to verify your email address.</p>
+        
+        <form action="" method="POST" id="verification-form">
+            <div class="input-group">
+                <input type="text" id="verification-code" name="verificationCode" placeholder="Enter verification code" required>
+                <input type="text" id="email-holder" style="display: none;" name="email">
+                <span class="error-message" id="error-message"></span>
+            </div>
+            <button type="submit">Continue</button>
+        </form>
+        <div id="message-box" class="message-box">
+            <p id="message"></p>
+        </div>
+    </div>
+    <script src="./js/verification.js"></script>
+    
+</body>
+</html>

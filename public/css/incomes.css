@@ -11,6 +11,13 @@ body {
     background-color: #e1e1e1;
 }
 
+a {
+    text-decoration: none;
+    color: #fff;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
 /* Header styles */
 header {
     background-color: #333;

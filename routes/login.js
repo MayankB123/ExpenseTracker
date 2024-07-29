@@ -5,15 +5,13 @@ const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv').config();
 const supabaseApp = require('@supabase/supabase-js')
 const { generateAccessToken, generateRefreshToken } = require('../modules/generateTokens.js')
-const { clearSession } = require('../middlewares/clearSession.js')
-
 
 const supabase = supabaseApp.createClient(
     process.env.SUPABASE_URL,
     process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-router.get('/', clearSession, (req, res) => {
+router.get('/', (req, res) => {
     res.render('public/login.ejs');
 });
 

@@ -1,6 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv').config();
+const cache = require('../modules/cache.js')
 
 function authenticateToken(req, res, next) {
     const accessToken = req.cookies.accessToken;
@@ -12,7 +13,9 @@ function authenticateToken(req, res, next) {
 
     jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
         if (err && refreshToken) {
+            
             jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+                if (cache.get(user.id) == refreshToken) {
                 if (err) {
                     return res.status(403).redirect('/login?session=expired');
                 }
@@ -27,7 +30,11 @@ function authenticateToken(req, res, next) {
 
                 req.user = user;
                 next();
+                } else {
+                    return res.status(403).redirect('/login?session=invalid');
+                }
             });
+            
         } else if (err) {
             return res.status(403).redirect('/login?session=invalid');
         } else {

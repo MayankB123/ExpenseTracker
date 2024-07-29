@@ -5,6 +5,13 @@ body, h1, h2, ul {
     box-sizing: border-box;
 }
 
+a {
+    text-decoration: none;
+    color: #fff;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
 /* General styles */
 body {
     font-family: Roboto, Arial, sans-serif;
