@@ -7,16 +7,66 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     
     try {
+        const USD = document.getElementById('USD')
+        const AUD = document.getElementById('AUD')
+        const EUR = document.getElementById('EUR')
+        const GBP = document.getElementById('GBP')
+        const INR = document.getElementById('INR')
+        
+        async function changeCurrency(currency) {
+            try {
+                const response = await fetch('/api/change-currency', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ currency })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                console.log(`${currency} change successful`);
+
+                location.reload();
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        USD.onclick = () => changeCurrency('USD');
+        AUD.onclick = () => changeCurrency('AUD');
+        EUR.onclick = () => changeCurrency('EUR');
+        GBP.onclick = () => changeCurrency('GBP');
+        INR.onclick = () => changeCurrency('INR');
+
         const budgetResponse = await fetch('/api/monthly-budget');
         
         if (!budgetResponse.ok) {
             throw new Error(`HTTP error! Status: ${budgetResponse.status}`);
         }
 
+        const currentCurrency = document.getElementById('currentCurrency').innerHTML;
+        
+
         const budgetData = await budgetResponse.json();
         const budgetH2 = document.getElementById('monthlyBudget');
         const monthlyBudget = budgetData.monthlyBudget
         budgetH2.innerHTML = `$${monthlyBudget}`
+
+        if (currentCurrency == 'USD' || currentCurrency == 'AUD') {
+            budgetH2.innerHTML = `$${monthlyBudget}`
+        } 
+        else if (currentCurrency == 'EUR') {
+            budgetH2.innerHTML = `€${monthlyBudget}`
+        }
+        else if (currentCurrency == 'GBP') {
+            budgetH2.innerHTML = `£${monthlyBudget}`
+        }
+        else {
+            budgetH2.innerHTML = `₹${monthlyBudget}`
+        }
         
         const response = await fetch('/api/expenses');
         
@@ -40,6 +90,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }]
             },
             options: {
+                maintainAspectRatio: false,
                 responsive: true,
                 plugins: {
                     tooltip: {
@@ -90,10 +141,34 @@ document.addEventListener('DOMContentLoaded', async () => {
             colorReference.push(grey);
             textColor = 'green';
             const totalExpensesAmount = document.getElementById('totalExpensesAmount');
-            totalExpensesAmount.innerHTML = `<div style="text-align: center; margin: 5px 0 5px 0; font-size: 1.5rem;">$${parseFloat(amount).toFixed(2)} <span style="color: rgb(93, 93, 93); font-size: 0.9rem;"> / $${parseInt(monthlyBudget)}.00</span></div>`;
+            if (currentCurrency == 'USD' || currentCurrency == 'AUD') {
+                totalExpensesAmount.innerHTML = `<div style="text-align: center; margin: 5px 0 5px 0; font-size: 1.5rem;">$${parseFloat(amount).toFixed(2)} <span style="color: rgb(93, 93, 93); font-size: 0.9rem;"> / $${parseInt(monthlyBudget)}.00</span></div>`;
+            } 
+            else if (currentCurrency == 'EUR') {
+                totalExpensesAmount.innerHTML = `<div style="text-align: center; margin: 5px 0 5px 0; font-size: 1.5rem;">€${parseFloat(amount).toFixed(2)} <span style="color: rgb(93, 93, 93); font-size: 0.9rem;"> / €${parseInt(monthlyBudget)}.00</span></div>`;
+            }
+            else if (currentCurrency == 'GBP') {
+                totalExpensesAmount.innerHTML = `<div style="text-align: center; margin: 5px 0 5px 0; font-size: 1.5rem;">£${parseFloat(amount).toFixed(2)} <span style="color: rgb(93, 93, 93); font-size: 0.9rem;"> / £${parseInt(monthlyBudget)}.00</span></div>`;
+            }
+            else {
+                budgetH2.innerHTML = `₹${monthlyBudget}`
+                totalExpensesAmount.innerHTML = `<div style="text-align: center; margin: 5px 0 5px 0; font-size: 1.5rem;">₹${parseFloat(amount).toFixed(2)} <span style="color: rgb(93, 93, 93); font-size: 0.9rem;"> / ₹${parseInt(monthlyBudget)}.00</span></div>`;
+            }
         } else {
             const totalExpensesAmount = document.getElementById('totalExpensesAmount');
-            totalExpensesAmount.innerHTML = `<div style="text-align: center; margin: 5px 0 5px 0; font-size: 1.5rem; color: red;">$${parseFloat(amount).toFixed(2)}<span style="color: rgb(93, 93, 93); font-size: 0.9rem;"> / $${parseInt(monthlyBudget)}.00</span></div>`;
+            if (currentCurrency == 'USD' || currentCurrency == 'AUD') {
+                totalExpensesAmount.innerHTML = `<div style="text-align: center; margin: 5px 0 5px 0; font-size: 1.5rem; color: red;">$${parseFloat(amount).toFixed(2)}<span style="color: rgb(93, 93, 93); font-size: 0.9rem;"> / $${parseInt(monthlyBudget)}.00</span></div>`;
+            } 
+            else if (currentCurrency == 'EUR') {
+                totalExpensesAmount.innerHTML = `<div style="text-align: center; margin: 5px 0 5px 0; font-size: 1.5rem; color: red;">€${parseFloat(amount).toFixed(2)}<span style="color: rgb(93, 93, 93); font-size: 0.9rem;"> / €${parseInt(monthlyBudget)}.00</span></div>`;
+            }
+            else if (currentCurrency == 'GBP') {
+                totalExpensesAmount.innerHTML = `<div style="text-align: center; margin: 5px 0 5px 0; font-size: 1.5rem; color: red;">£${parseFloat(amount).toFixed(2)}<span style="color: rgb(93, 93, 93); font-size: 0.9rem;"> / £${parseInt(monthlyBudget)}.00</span></div>`;
+            }
+            else {
+                totalExpensesAmount.innerHTML = `<div style="text-align: center; margin: 5px 0 5px 0; font-size: 1.5rem; color: red;">₹${parseFloat(amount).toFixed(2)}<span style="color: rgb(93, 93, 93); font-size: 0.9rem;"> / ₹${parseInt(monthlyBudget)}.00</span></div>`;
+            }
+            
         }
 
         
@@ -120,7 +195,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             row.appendChild(descriptionCell);
 
             const amountCell = document.createElement('td');
-            amountCell.textContent = `$${item.amount.toFixed(2)}`;
+            if (currentCurrency == 'USD' || currentCurrency == 'AUD') {
+                amountCell.textContent = `$${item.amount.toFixed(2)}`;
+            } 
+            else if (currentCurrency == 'EUR') {
+                amountCell.textContent = `€${item.amount.toFixed(2)}`;
+            }
+            else if (currentCurrency == 'GBP') {
+                amountCell.textContent = `£${item.amount.toFixed(2)}`;
+            }
+            else {
+                amountCell.textContent = `₹${item.amount.toFixed(2)}`;
+            }
+            
             row.appendChild(amountCell);
 
             tableBody.appendChild(row);

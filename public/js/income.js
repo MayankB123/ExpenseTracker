@@ -7,6 +7,40 @@ let incomes;
 document.addEventListener('DOMContentLoaded', async () => {
 
     try {        
+        const USD = document.getElementById('USD')
+        const AUD = document.getElementById('AUD')
+        const EUR = document.getElementById('EUR')
+        const GBP = document.getElementById('GBP')
+        const INR = document.getElementById('INR')
+        
+        async function changeCurrency(currency) {
+            try {
+                const response = await fetch('/api/change-currency', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ currency })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                console.log(`${currency} change successful`);
+
+                location.reload();
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        USD.onclick = () => changeCurrency('USD');
+        AUD.onclick = () => changeCurrency('AUD');
+        EUR.onclick = () => changeCurrency('EUR');
+        GBP.onclick = () => changeCurrency('GBP');
+        INR.onclick = () => changeCurrency('INR');
+        
         const incomeResponse = await fetch('/api/income');
 
         if (!incomeResponse.ok) {
@@ -35,7 +69,22 @@ document.addEventListener('DOMContentLoaded', async () => {
             row.appendChild(descriptionCell);
 
             const amountCell = document.createElement('td');
-            amountCell.textContent = `$${item.amount.toFixed(2)}`;
+
+            const currentCurrency = document.getElementById('currentCurrency').innerHTML;
+
+            if (currentCurrency == 'USD' || currentCurrency == 'AUD') {
+                amountCell.textContent = `$${item.amount.toFixed(2)}`;
+            } 
+            else if (currentCurrency == 'EUR') {
+                amountCell.textContent = `€${item.amount.toFixed(2)}`;
+            }
+            else if (currentCurrency == 'GBP') {
+                amountCell.textContent = `£${item.amount.toFixed(2)}`;
+            }
+            else {
+                amountCell.textContent = `₹${item.amount.toFixed(2)}`;
+            }
+
             row.appendChild(amountCell);
 
             tableBody.appendChild(row);
@@ -84,6 +133,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             type: 'bar',
             data: data,
             options: {
+                maintainAspectRatio: false,
                 responsive: true,
                 plugins: {
                     legend: {
@@ -146,8 +196,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         const totalIncome = document.getElementById('totalIncomeAmount');
-        totalIncome.innerHTML = `$${amount.toFixed(2)}`;
-
+        const currentCurrency = document.getElementById('currentCurrency').innerHTML;
+        if (currentCurrency == 'USD' || currentCurrency == 'AUD') {
+            totalIncome.innerHTML = `$${amount.toFixed(2)}`;
+        } 
+        else if (currentCurrency == 'EUR') {
+            totalIncome.innerHTML = `€${amount.toFixed(2)}`;
+        }
+        else if (currentCurrency == 'GBP') {
+            totalIncome.innerHTML = `£${amount.toFixed(2)}`;
+        }
+        else {
+            totalIncome.innerHTML = `₹${amount.toFixed(2)}`;
+        }
+        
         const data2 = {
             labels: dates,
             datasets: [{
@@ -164,6 +226,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             type: 'line',
             data: data2,
             options: {
+                maintainAspectRatio: false,
                 responsive: true,
                 plugins: {
                     legend: {
@@ -210,7 +273,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         const IncomeGoalData = await incomeGoalResponse.json();
         const incomeGoalH2 = document.getElementById('incomeGoalAmount');
         const incomeGoalAmount = IncomeGoalData.incomeGoal
-        incomeGoalH2.innerHTML = `$${incomeGoalAmount} <span id="incomeGoalPercentage" class="income-goal-percentage">${(amount / incomeGoalAmount * 100).toFixed(2)}%</span>`
+        if (currentCurrency == 'USD' || currentCurrency == 'AUD') {
+            incomeGoalH2.innerHTML = `$${incomeGoalAmount} <span id="incomeGoalPercentage" class="income-goal-percentage">${(amount / incomeGoalAmount * 100).toFixed(2)}%</span>`
+        }
+        if (currentCurrency == 'EUR') {
+            incomeGoalH2.innerHTML = `€${incomeGoalAmount} <span id="incomeGoalPercentage" class="income-goal-percentage">${(amount / incomeGoalAmount * 100).toFixed(2)}%</span>`
+        }
+        if (currentCurrency == 'GBP') {
+            incomeGoalH2.innerHTML = `£${incomeGoalAmount} <span id="incomeGoalPercentage" class="income-goal-percentage">${(amount / incomeGoalAmount * 100).toFixed(2)}%</span>`
+        }
+        if (currentCurrency == 'INR') {
+            incomeGoalH2.innerHTML = `₹${incomeGoalAmount} <span id="incomeGoalPercentage" class="income-goal-percentage">${(amount / incomeGoalAmount * 100).toFixed(2)}%</span>`
+        }
         incomeGoalPercentage = document.getElementById('incomeGoalPercentage')
         if ((amount / incomeGoalAmount * 100) < 40) {
             incomeGoalPercentage.setAttribute('style', 'color: red;')

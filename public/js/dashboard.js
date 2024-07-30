@@ -5,7 +5,41 @@ const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
 
 document.addEventListener('DOMContentLoaded', async () => {
 
-    try {        
+    try {    
+        const USD = document.getElementById('USD')
+        const AUD = document.getElementById('AUD')
+        const EUR = document.getElementById('EUR')
+        const GBP = document.getElementById('GBP')
+        const INR = document.getElementById('INR')
+        
+        async function changeCurrency(currency) {
+            try {
+                const response = await fetch('/api/change-currency', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ currency })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                console.log(`${currency} change successful`);
+
+                location.reload();
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        USD.onclick = () => changeCurrency('USD');
+        AUD.onclick = () => changeCurrency('AUD');
+        EUR.onclick = () => changeCurrency('EUR');
+        GBP.onclick = () => changeCurrency('GBP');
+        INR.onclick = () => changeCurrency('INR');
+
         const incomeResponse = await fetch('/api/income');
 
         if (!incomeResponse.ok) {
@@ -21,32 +55,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         const expenses = await expensesResponse.json();
-
-        // const tableBody = document.getElementById('expenseTableBody');
-
-        // tableBody.innerHTML = '';
-
-        // incomes.forEach(item => {
-        //     const row = document.createElement('tr');
-
-        //     const dateCell = document.createElement('td');
-        //     dateCell.textContent = new Date(item.created_at).toLocaleDateString();
-        //     row.appendChild(dateCell);
-
-        //     const categoryCell = document.createElement('td');
-        //     categoryCell.textContent = item.category;
-        //     row.appendChild(categoryCell);
-
-        //     const descriptionCell = document.createElement('td');
-        //     descriptionCell.textContent = item.description;
-        //     row.appendChild(descriptionCell);
-
-        //     const amountCell = document.createElement('td');
-        //     amountCell.textContent = `$${item.amount.toFixed(2)}`;
-        //     row.appendChild(amountCell);
-
-        //     tableBody.appendChild(row);
-        // });
 
         function getDaysInMonth(year, month) {
             const date = new Date(year, month + 1, 0);
@@ -64,10 +72,27 @@ document.addEventListener('DOMContentLoaded', async () => {
             expenseAmount += item.amount;
         });
 
+        const currentCurrency = document.getElementById('currentCurrency').innerHTML;
+
         const incomeNumber = document.getElementById('incomeNumber');
-        incomeNumber.innerHTML = `$${incomeAmount.toFixed(2)}`;
         const expensesNumber = document.getElementById('expensesNumber')
-        expensesNumber.innerHTML = `$${expenseAmount.toFixed(2)}`
+        if (currentCurrency == 'USD' || currentCurrency == 'AUD') {
+            incomeNumber.innerHTML = `$${incomeAmount.toFixed(2)}`;
+            expensesNumber.innerHTML = `$${expenseAmount.toFixed(2)}`
+        } 
+        else if (currentCurrency == 'EUR') {
+            incomeNumber.innerHTML = `€${incomeAmount.toFixed(2)}`;
+            expensesNumber.innerHTML = `€${expenseAmount.toFixed(2)}`
+        }
+        else if (currentCurrency == 'GBP') {
+            incomeNumber.innerHTML = `£${incomeAmount.toFixed(2)}`;
+            expensesNumber.innerHTML = `£${expenseAmount.toFixed(2)}`
+        }
+        else {
+            incomeNumber.innerHTML = `₹${incomeAmount.toFixed(2)}`;
+            expensesNumber.innerHTML = `₹${expenseAmount.toFixed(2)}`
+        }
+
 
         const ctx = document.getElementById('incomeVsExpensesBarChart').getContext('2d');
 
@@ -97,6 +122,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             type: 'bar',
             data: data,
             options: {
+                maintainAspectRatio: false,
                 responsive: true,
                 plugins: {
                     legend: {
@@ -199,6 +225,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             type: 'line',
             data: data2,
             options: {
+                maintainAspectRatio: false,
                 responsive: true,
                 plugins: {
                     legend: {
@@ -245,14 +272,28 @@ document.addEventListener('DOMContentLoaded', async () => {
         const IncomeGoalData = await incomeGoalResponse.json();
         const incomeGoalAmount = IncomeGoalData.incomeGoal
 
+        
         const incomeGoalBarAmount = document.getElementById('incomeGoalBarAmount');
-        incomeGoalBarAmount.innerHTML = `$${incomeAmount.toFixed(2)} / $${incomeGoalAmount}`
+        if (currentCurrency == 'USD' || currentCurrency == 'AUD') {
+            incomeGoalBarAmount.innerHTML = `$${incomeAmount.toFixed(2)} / $${incomeGoalAmount}`
+        }
+        if (currentCurrency == 'EUR') {
+            incomeGoalBarAmount.innerHTML = `€${incomeAmount.toFixed(2)} / €${incomeGoalAmount}`
+        }
+        if (currentCurrency == 'GBP') {
+            incomeGoalBarAmount.innerHTML = `£${incomeAmount.toFixed(2)} / £${incomeGoalAmount}`
+        }
+        if (currentCurrency == 'INR') {
+            incomeGoalBarAmount.innerHTML = `₹${incomeAmount.toFixed(2)} / ₹${incomeGoalAmount}`
+        }
         const widthToSet = (incomeAmount / incomeGoalAmount * 100);
         const incomeGoalProgress = document.getElementById('incomeGoalProgress');
         incomeGoalProgress.setAttribute('style', `width: ${widthToSet}%`)
 
         const incomeExpenseRatioNumber = (incomeAmount / expenseAmount) * 100;
-        console.log(incomeExpenseRatioNumber)
+        if (incomeExpenseRatioNumber == NaN) {
+            incomeExpenseRatioNumber = 0;
+        }
         let color;
         if (parseFloat(incomeExpenseRatioNumber) >= 100) {
             color = 'green'

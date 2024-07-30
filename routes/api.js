@@ -8,6 +8,7 @@ const { authenticateToken } = require('../middlewares/authorization.js');
 const { retrieveExpenses, retrieveIncome, retrieveMonthlyBudget, retrieveIncomeGoal } = require('../modules/retrieveData.js');
 const { updateMonthlyBudget, updateIncomeGoal } = require('../modules/updateData.js')
 const { insertExpense, insertIncome } = require('../modules/insertData.js')
+const cache = require('../modules/cache.js')
 
 const supabase = supabaseApp.createClient(
     process.env.SUPABASE_URL,
@@ -16,7 +17,26 @@ const supabase = supabaseApp.createClient(
 
 router.get('/expenses', authenticateToken, async (req, res) => {
     const expenses = await retrieveExpenses(req.user);
-    res.status(200).json(expenses)
+
+    const currency = cache.get(`${req.user.id}-currency`);
+
+    const response = await fetch('https://api.exchangerate-api.com/v4/latest/usd')
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+    const exchangeRates = await response.json();
+
+    const conversion = exchangeRates.rates[currency];
+
+    const updatedExpenses = expenses.map(expense => {
+        return {
+          ...expense,
+          amount: expense.amount * conversion
+        };
+      });
+    res.status(200).json(updatedExpenses)
 });
 
 router.post('/expenses', authenticateToken, async (req, res) => {
@@ -32,8 +52,28 @@ router.post('/expenses', authenticateToken, async (req, res) => {
 });
 
 router.get('/income', authenticateToken, async (req, res) => {
-    const expenses = await retrieveIncome(req.user);
-    res.status(200).json(expenses)
+    const income = await retrieveIncome(req.user);
+    
+    const currency = cache.get(`${req.user.id}-currency`);
+
+    const response = await fetch('https://api.exchangerate-api.com/v4/latest/usd')
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+    const exchangeRates = await response.json();
+
+    const conversion = exchangeRates.rates[currency];
+
+    const updatedIncome = income.map(item => {
+        return {
+          ...item,
+          amount: item.amount * conversion
+        };
+      });
+
+    res.status(200).json(updatedIncome)
 });
 
 router.post('/income', authenticateToken, async (req, res) => {
@@ -50,7 +90,22 @@ router.post('/income', authenticateToken, async (req, res) => {
 
 router.get('/monthly-budget', authenticateToken, async (req, res) => {
     const monthlyBudget = await retrieveMonthlyBudget(req.user);
-    res.status(200).json({monthlyBudget: monthlyBudget[0].amount});
+    
+    const currency = cache.get(`${req.user.id}-currency`);
+
+    const response = await fetch('https://api.exchangerate-api.com/v4/latest/usd')
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+    const exchangeRates = await response.json();
+
+    const conversion = exchangeRates.rates[currency];
+
+    const updatedMonthlyBudget = monthlyBudget[0].amount * conversion;
+
+    res.status(200).json({monthlyBudget: updatedMonthlyBudget});
 });
 
 router.post('/monthly-budget', authenticateToken, async (req, res) => {
@@ -67,7 +122,22 @@ router.post('/monthly-budget', authenticateToken, async (req, res) => {
 
 router.get('/income-goal', authenticateToken, async (req, res) => {
     const incomeGoal = await retrieveIncomeGoal(req.user);
-    res.status(200).json({incomeGoal: incomeGoal[0].amount});
+    
+    const currency = cache.get(`${req.user.id}-currency`);
+
+    const response = await fetch('https://api.exchangerate-api.com/v4/latest/usd')
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+    const exchangeRates = await response.json();
+
+    const conversion = exchangeRates.rates[currency];
+
+    const updatedIncome = incomeGoal[0].amount * conversion;
+
+    res.status(200).json({incomeGoal: updatedIncome});
 });
 
 router.post('/income-goal', authenticateToken, async (req, res) => {
@@ -80,6 +150,13 @@ router.post('/income-goal', authenticateToken, async (req, res) => {
     else {
         res.status(400).send();
     }
+});
+
+router.post('/change-currency', authenticateToken, async (req, res) => {
+    const currency = req.body.currency;
+    cache.del(`${req.user.id}-currency`)
+    cache.set(`${req.user.id}-currency`, currency)
+    res.status(200).send()
 });
 
 module.exports = router;

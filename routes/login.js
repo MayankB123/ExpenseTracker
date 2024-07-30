@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv').config();
 const supabaseApp = require('@supabase/supabase-js')
 const { generateAccessToken, generateRefreshToken } = require('../modules/generateTokens.js')
+const cache = require('../modules/cache.js')
 
 const supabase = supabaseApp.createClient(
     process.env.SUPABASE_URL,
@@ -57,6 +58,7 @@ router.post('/', async (req, res) => {
                 });
             
             // process.env.NODE_ENV === 'production'
+            cache.set(`${user.id}-currency`, 'USD')
 
             res.status(200).redirect('/dashboard')
         }

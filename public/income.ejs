@@ -26,6 +26,16 @@
                 </ul>
             </nav>
             <div class="user-profile">
+                <div class="dropdown">
+                    <button id="currentCurrency" class="dropbtn"><%= locals.currency %></button>
+                    <div class="dropdown-content">
+                        <a id="USD">USD</a>
+                        <a id="AUD">AUD</a>
+                        <a id="EUR">EUR</a>
+                        <a id="GBP">GBP</a>
+                        <a id="INR">INR</a>
+                    </div>
+                </div>
                 <span class="logout"><a href="/logout">Logout</a></span>
             </div>
         </div>
