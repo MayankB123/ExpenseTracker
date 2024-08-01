@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv').config();
 const supabaseApp = require('@supabase/supabase-js');
 const { authenticateToken } = require('../middlewares/authorization.js');
+const cache = require('../modules/cache.js')
 
 const supabase = supabaseApp.createClient(
     process.env.SUPABASE_URL,
@@ -12,7 +13,8 @@ const supabase = supabaseApp.createClient(
 );
 
 router.get('/', authenticateToken, (req, res) => {
-    res.render('public/dashboard.ejs', {user: req.user});
+    const currency = cache.get(`${req.user.id}-currency`)
+    res.render('public/dashboard.ejs', {user: req.user, currency: currency});
 });
 
 module.exports = router;
