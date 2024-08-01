@@ -8,12 +8,12 @@ body, h1, h2, ul {
 /* General styles */
 body {
     font-family: Roboto, Arial, sans-serif;
-    background-color: #e1e1e1;
+    background-color: #E0E2DB;
 }
 
 /* Header styles */
 header {
-    background-color: #333;
+    background-color: #3A4744;
     color: #fff;
     padding: 15px 0;
 }
@@ -492,7 +492,7 @@ button[type="submit"]:hover {
 
 /* Dropdown Button */
 .dropbtn {
-    background-color: #333;
+    background-color: #3A4744;
     color: white;
     padding: 16px;
     font-size: 16px;

@@ -9,9 +9,10 @@
         <link rel="stylesheet" href="css/authentication.css">
     </head>
     <body>
-        <h1>Register</h1>
+        <main>
         <form action="" method="POST">
             <div class="container">
+                <h1 class="title">Register</h1>
                 <label for="email"><b>Email</b></label>
                 <input id="emailBox" type="text" placeholder="Enter Email" name="email" maxlength="150" required>
 
@@ -23,11 +24,6 @@
         
                 <button type="submit">Register</button>
             </div>
-        
-            <div class="container" style="background-color:#f1f1f1">
-                <button type="button" class="cancelbtn">Cancel</button>
-                <span class="psw">Forgot <a href="#">password?</a></span>
-            </div>
         </form>
 
         <div id="message-box" class="message-box">
@@ -35,5 +31,6 @@
         </div>
         
         <script src="js/register.js" async defer></script>
+        </main>
     </body>
 </html>

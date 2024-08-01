@@ -4,7 +4,9 @@ body {
   font-weight: 300;
   font-style: normal;
   margin: 0;
-  background-color: #BBBDF6;
+  /* obackground-color: #D1C8E1; https://coolors.co/c3c3e6-d1c8e1-bba0ca-b370b0-87255b */
+  /* https://coolors.co/e0e2db-d2d4c8-b8bdb5-889696-5f7470 */
+  background-color: #B8BDB5; 
 }
 
 main {
@@ -18,29 +20,42 @@ main {
 }
 
 form {
-    border: 1px solid #f1f1f1;
-    max-width: 550px;
-    height: auto;
-    margin: auto;
-    background-color: white;
-    border-radius: 10px;
-    padding: 18px 12px;
+  border: 1px solid #f1f1f1;
+  max-width: 550px;
+  height: auto;
+  margin: auto;
+  background-color: white;
+  border-radius: 10px;
+  padding: 18px 12px;
+}
+
+@media screen and (max-width: 800px) {
+  form {
+    max-width: 80%;
   }
+
+  .title {
+    font-size: 1.8rem;
+  }
+}
   
-  /* Full-width inputs */
-  input[type=text], input[type=password] {
-    width: 100%;
-    padding: 12px 20px;
-    border-radius: 8px;
-    margin: 8px 0px 18px 0px;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-  }
+/* Full-width inputs */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 200;
+  margin: 8px 0px 18px 0px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
   
   /* Set a style for all buttons */
   button {
-    background-color: #9893DA;
+    /* background-color: #D1C8E1; */
+    background-color: #5F7470;
     max-width: 150px;
     color: white;
     font-size: 16px;
