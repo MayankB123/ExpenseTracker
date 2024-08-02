@@ -20,4 +20,27 @@ document.addEventListener('DOMContentLoaded', async () => {
             messageBox.style.display = 'none';
         }, 8000); // 3000 milliseconds = 3 seconds
     }
+
+    document.getElementById('resendCode').onclick = async function() {
+        const url = `/api/resend-code/${emailParam}`;
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+
+            console.log('Success');
+            // Handle the response data as needed
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
 });

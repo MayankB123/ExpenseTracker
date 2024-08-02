@@ -1,5 +1,5 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: Libre Franklin, Arial, Helvetica, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,7 +40,7 @@ h1 {
 }
 p {
   margin-bottom: 20px;
-  color: #555;
+  color: black;
 }
 .input-group {
   margin-bottom: 15px;
@@ -68,4 +68,24 @@ button:hover {
 .error-message {
   color: red;
   font-size: 14px;
+}
+
+.resend-code {
+  text-align: center;
+  font-size: 15px;
+  margin-top: 18px
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+a:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+a:active {
+  opacity: 0.7;
 }

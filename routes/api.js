@@ -9,11 +9,24 @@ const { retrieveExpenses, retrieveIncome, retrieveMonthlyBudget, retrieveIncomeG
 const { updateMonthlyBudget, updateIncomeGoal } = require('../modules/updateData.js')
 const { insertExpense, insertIncome } = require('../modules/insertData.js')
 const cache = require('../modules/cache.js')
+const nodemailer = require('nodemailer')
+const crypto = require('crypto')
 
 const supabase = supabaseApp.createClient(
     process.env.SUPABASE_URL,
     process.env.SUPABASE_SERVICE_ROLE_KEY
 );
+
+const transporter = nodemailer.createTransport({
+    service: "Gmail",
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: "noreplymail.expensetracker@gmail.com",
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
 
 router.get('/expenses', authenticateToken, async (req, res) => {
     const expenses = await retrieveExpenses(req.user);
@@ -157,6 +170,36 @@ router.post('/change-currency', authenticateToken, async (req, res) => {
     cache.del(`${req.user.id}-currency`)
     cache.set(`${req.user.id}-currency`, currency)
     res.status(200).send()
+});
+
+router.post('/resend-code/:email', async (req, res) => {
+    const email = req.params.email;
+
+    const information = cache.get(email)
+    
+    const newOtp = crypto.randomInt(100000, 1000000);
+
+    information.otp = newOtp;
+
+    const subject = "Expense Tracker Email Verification";
+
+    const text = `Your Pass Code is ${newOtp}`
+
+    cache.set(email, information, 300000);
+
+    try {
+        let info = await transporter.sendMail({
+            from: "noreplymail.expensetracker@gmail.com",
+            to: email,
+            subject: subject,
+            text: text
+        })
+    } catch (error) {
+        console.error(error)
+        res.status(500).redirect('/login?login=server-failure')
+    }
+
+    res.status(200).send();
 });
 
 module.exports = router;

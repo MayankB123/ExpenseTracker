@@ -83,6 +83,12 @@ input[type=text], input[type=password] {
     text-align: center;
     font-size: 18px
   }
+
+  .register-link {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 18px
+  }
   
   /* Add a hover effect for buttons */
   button:hover {
