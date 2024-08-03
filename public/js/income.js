@@ -98,13 +98,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         const incomeMap = {};
         let amount = 0;
 
+        const dateNow = new Date();
+        const monthNow = dateNow.getMonth()
+        const yearNow = dateNow.getFullYear()
+
         incomes.forEach(item => {
+            incomeDate = new Date(item.created_at)
+            if (incomeDate.getMonth() == monthNow && incomeDate.getFullYear() == yearNow) {
             if (incomeMap[item.category]) {
                 incomeMap[item.category] += item.amount;
             } else {
                 incomeMap[item.category] = item.amount;
             }
             amount += item.amount;
+            }
         });
 
         const ctx = document.getElementById('categoriesBarChart').getContext('2d');

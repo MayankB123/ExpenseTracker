@@ -26,6 +26,8 @@ const incomeRouter = require('./routes/income');
 const expensesRouter = require('./routes/expenses');
 const apiRouter = require('./routes/api')
 const verificationRouter = require('./routes/verification')
+const forgotPasswordRouter = require('./routes/forgot-password')
+const resetPasswordRouter = require('./routes/reset-password')
 app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);
 app.use('/register', registerRouter);
@@ -34,5 +36,7 @@ app.use('/income', incomeRouter);
 app.use('/expenses', expensesRouter);
 app.use('/api', apiRouter);
 app.use('/verification', verificationRouter);
+app.use('/forgot-password', forgotPasswordRouter);
+app.use('/reset-password', resetPasswordRouter);
 
 // Currency conversion API - https://api.exchangerate-api.com/v4/latest/${currency e.g. 'usd'}

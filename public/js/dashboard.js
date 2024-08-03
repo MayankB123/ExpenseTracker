@@ -6,6 +6,11 @@ const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
 document.addEventListener('DOMContentLoaded', async () => {
 
     try {    
+        const now = new Date();
+        const day = now.getDate()
+        const month = now.getMonth();
+        const year = now.getFullYear();
+        
         const USD = document.getElementById('USD')
         const AUD = document.getElementById('AUD')
         const EUR = document.getElementById('EUR')
@@ -46,7 +51,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             throw new Error(`HTTP error! Status: ${incomeResponse.status}`);
         }
 
-        const incomes = await incomeResponse.json();
+        const preIncomes = await incomeResponse.json();
 
         const expensesResponse = await fetch('/api/expenses');
         
@@ -54,12 +59,23 @@ document.addEventListener('DOMContentLoaded', async () => {
             throw new Error(`HTTP error! Status: ${expensesResponse.status}`);
         }
 
-        const expenses = await expensesResponse.json();
+        const preExpenses = await expensesResponse.json();
 
         function getDaysInMonth(year, month) {
             const date = new Date(year, month + 1, 0);
             return date.getDate();
         }
+
+        const incomes = preIncomes.filter(entry => {
+            const entryDate = new Date(entry.created_at);
+            return (entryDate.getMonth() === month) && (entryDate.getFullYear() === year);
+        });
+
+        const expenses = preExpenses.filter(entry => {
+            const entryDate = new Date(entry.created_at);
+            return (entryDate.getMonth() === month) && (entryDate.getFullYear() === year);
+        });
+
 
         let incomeAmount = 0;
         let expenseAmount = 0;
@@ -67,6 +83,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         incomes.forEach(item => {
             incomeAmount += item.amount;
         });
+
+        console.log(incomes)
 
         expenses.forEach(item => {
             expenseAmount += item.amount;
@@ -148,11 +166,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
         const ctx2 = document.getElementById('incomeLineChart').getContext('2d');
-
-        const now = new Date();
-        const day = now.getDate()
-        const month = now.getMonth();
-        const year = now.getFullYear();
 
         const numberOfDays = getDaysInMonth(year, month);
 

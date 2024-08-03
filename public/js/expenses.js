@@ -76,6 +76,46 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         expenses = await response.json();
 
+        const tableBody = document.getElementById('expenseTableBody'); 
+
+        tableBody.innerHTML = '';
+
+        expenses.forEach(item => {
+            const row = document.createElement('tr');
+
+            const dateCell = document.createElement('td');
+            dateCell.textContent = new Date(item.created_at).toLocaleDateString();
+            row.appendChild(dateCell);
+
+            const categoryCell = document.createElement('td');
+            categoryCell.textContent = item.category;
+            row.appendChild(categoryCell);
+
+            const descriptionCell = document.createElement('td');
+            descriptionCell.textContent = item.description;
+            row.appendChild(descriptionCell);
+
+            const amountCell = document.createElement('td');
+            if (currentCurrency == 'USD' || currentCurrency == 'AUD') {
+                amountCell.textContent = `$${item.amount.toFixed(2)}`;
+            } 
+            else if (currentCurrency == 'EUR') {
+                amountCell.textContent = `€${item.amount.toFixed(2)}`;
+            }
+            else if (currentCurrency == 'GBP') {
+                amountCell.textContent = `£${item.amount.toFixed(2)}`;
+            }
+            else {
+                amountCell.textContent = `₹${item.amount.toFixed(2)}`;
+            }
+            
+            row.appendChild(amountCell);
+
+            tableBody.appendChild(row);
+        });
+
+
+
         const ctx = document.getElementById('expensesChart').getContext('2d');
 
         const chartData = {
@@ -119,13 +159,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         const expenseMap = {};
         let amount = 0;
 
+        const dateNow = new Date();
+        const monthNow = dateNow.getMonth()
+        const yearNow = dateNow.getFullYear()
+
         expenses.forEach(item => {
+            expenseDate = new Date(item.created_at)
+            if (expenseDate.getMonth() == monthNow && expenseDate.getFullYear() == yearNow) {
             if (expenseMap[item.category]) {
                 expenseMap[item.category] += item.amount.toFixed(2);
             } else {
                 expenseMap[item.category] = item.amount.toFixed(2);
             }
             amount += item.amount;
+            }
         });
 
         Object.keys(expenseMap).forEach((category, index) => {
@@ -175,43 +222,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const expensesChart = new Chart(ctx, chartData);
         expensesChart.update();
 
-        const tableBody = document.getElementById('expenseTableBody'); 
-
-        tableBody.innerHTML = '';
-
-        expenses.forEach(item => {
-            const row = document.createElement('tr');
-
-            const dateCell = document.createElement('td');
-            dateCell.textContent = new Date(item.created_at).toLocaleDateString();
-            row.appendChild(dateCell);
-
-            const categoryCell = document.createElement('td');
-            categoryCell.textContent = item.category;
-            row.appendChild(categoryCell);
-
-            const descriptionCell = document.createElement('td');
-            descriptionCell.textContent = item.description;
-            row.appendChild(descriptionCell);
-
-            const amountCell = document.createElement('td');
-            if (currentCurrency == 'USD' || currentCurrency == 'AUD') {
-                amountCell.textContent = `$${item.amount.toFixed(2)}`;
-            } 
-            else if (currentCurrency == 'EUR') {
-                amountCell.textContent = `€${item.amount.toFixed(2)}`;
-            }
-            else if (currentCurrency == 'GBP') {
-                amountCell.textContent = `£${item.amount.toFixed(2)}`;
-            }
-            else {
-                amountCell.textContent = `₹${item.amount.toFixed(2)}`;
-            }
-            
-            row.appendChild(amountCell);
-
-            tableBody.appendChild(row);
-        });
+        
 
     } catch (error) {
         console.error('Error fetching expenses:', error);
