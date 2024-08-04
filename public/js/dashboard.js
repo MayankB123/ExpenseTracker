@@ -303,8 +303,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         const incomeGoalProgress = document.getElementById('incomeGoalProgress');
         incomeGoalProgress.setAttribute('style', `width: ${widthToSet}%`)
 
-        const incomeExpenseRatioNumber = (incomeAmount / expenseAmount) * 100;
-        if (incomeExpenseRatioNumber == NaN) {
+        let incomeExpenseRatioNumber = (incomeAmount / expenseAmount) * 100;
+        console.log(incomeExpenseRatioNumber)
+        if (isNaN(incomeExpenseRatioNumber)) {
             incomeExpenseRatioNumber = 0;
         }
         let color;

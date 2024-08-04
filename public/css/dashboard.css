@@ -28,6 +28,14 @@ header {
     box-sizing: border-box;
 }
 
+.dropbtn {
+    background-color: #3A4744;
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+  }
+
 .logo h1 {
     margin: 0;
 }
@@ -47,7 +55,6 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100px;
 }
 
 a {
@@ -57,16 +64,52 @@ a {
     margin-right: 10px;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 1350px) {
     .header-content {
-        flex-direction: column;
-        align-items: flex-start;
+        margin-left: 3.5%;
+        margin-right: 3.5%;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 800px) {
+    .user-profile {
+        font-size: 0.9rem;
+        gap: 10px;
+    }
+
+    .dropbtn {
+        width: 20px;
+        font-size: 5px;
+    }
+
+    .logo h1 {
+        font-size: 1.75rem;
     }
 
     .nav-menu ul {
-        flex-direction: column;
         gap: 10px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 720px) {
+    .user-profile {
+        font-size: 0.6rem;
+        gap: 10px;
+    }
+
+    .dropbtn {
+        font-size: 10px !important;
+    }
+
+    .logo h1 {
+        font-size: 1.5rem;
+    }
+
+    .nav-menu ul {
+        gap: 10px;
+        font-size: 0.8rem;
     }
 }
 
@@ -83,7 +126,6 @@ a {
     margin-bottom: 20px
 }
 
-
 .income-summary {
     display: flex;
     align-items: center;
@@ -92,6 +134,14 @@ a {
 
 @media (max-width: 1300px) {
     .dashboard-container {
+        margin-left: 3.5%;
+        margin-right: 3.5%;
+    }
+    .details-container {
+        margin-left: 3.5%;
+        margin-right: 3.5%;
+    }
+    .numbers-container {
         margin-left: 3.5%;
         margin-right: 3.5%;
     }
@@ -180,14 +230,8 @@ a {
     column-gap: 20px;
     grid-template-columns: 2fr 1fr;
     max-width: 1240px;
+    padding: 0 20px;
     margin: 0 auto;
-}
-
-@media (max-width: 1300px) {
-    .details-container {
-        margin-left: 3.5%;
-        margin-right: 3.5%;
-    }
 }
 
 .numbers-container {
@@ -196,6 +240,7 @@ a {
     column-gap: 20px;
     grid-template-columns: 1fr 1fr;
     max-width: 1240px;
+    padding: 0 20px;
     margin: 0 auto;
 }
 
@@ -487,18 +532,6 @@ button[type="submit"]:hover {
 }
 
 
-
-
-
-/* Dropdown Button */
-.dropbtn {
-    background-color: #3A4744;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    margin-right: 20px;
-  }
   
   /* The container <div> - needed to position the dropdown content */
   .dropdown {
