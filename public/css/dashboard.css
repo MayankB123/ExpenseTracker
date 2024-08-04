@@ -16,6 +16,7 @@ header {
     background-color: #3A4744;
     color: #fff;
     padding: 15px 0;
+    min-width: 100vw;
 }
 
 .header-content {
@@ -26,6 +27,7 @@ header {
     margin: 0 auto;
     padding: 0 20px;
     box-sizing: border-box;
+    min-height: 6vh;
 }
 
 .dropbtn {
@@ -72,46 +74,80 @@ a {
 }
 
 /* Responsive Design */
-@media (max-width: 800px) {
+@media (max-width: 850px) {
+    .header-content {
+        min-height: 7.5vh;
+    }
+    
     .user-profile {
         font-size: 0.9rem;
         gap: 10px;
     }
 
     .dropbtn {
-        width: 20px;
-        font-size: 5px;
+        font-size: 0.9rem;
     }
 
     .logo h1 {
-        font-size: 1.75rem;
+        font-size: 1.6rem;
     }
 
     .nav-menu ul {
         gap: 10px;
-        font-size: 0.8rem;
+        font-size: 0.9rem;
     }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 700px) {
+    .header-content {
+        min-height: 9vh;
+        grid-template-columns: 1fr 1fr;
+        justify-content: space-between;
+    }
+
     .user-profile {
-        font-size: 0.6rem;
+        font-size: 1rem;
         gap: 10px;
     }
 
     .dropbtn {
-        font-size: 10px !important;
+        font-size: 1rem !important;
     }
 
     .logo h1 {
-        font-size: 1.5rem;
+        font-size: 1.65rem;
+        display: none;
+    }
+
+    .logo {
+        display: none;
+    }
+
+    .nav-menu ul {
+        gap: 10px;
+        font-size: 1rem;
+    }
+}
+
+/* @media (max-width: 680px) {
+    .user-profile {
+        font-size: 0.8rem;
+        gap: 10px;
+    }
+
+    .dropbtn {
+        font-size: 0.8rem !important;
+    }
+
+    .logo h1 {
+        font-size: 1.2rem;
     }
 
     .nav-menu ul {
         gap: 10px;
         font-size: 0.8rem;
     }
-}
+} */
 
 .dashboard-container {
     display: grid;
@@ -151,6 +187,13 @@ a {
     text-align: center;
     margin: 0 0 5px 0;
     font-size: 1.1rem;
+}
+
+.dashboard-summary {
+    background-color: #fff;
+    border-radius: 8px;
+    margin-top: 20px;
+    padding: 15px;
 }
 
 .total-expenses-label {
@@ -230,8 +273,8 @@ a {
     column-gap: 20px;
     grid-template-columns: 2fr 1fr;
     max-width: 1240px;
-    padding: 0 20px;
-    margin: 0 auto;
+    padding: 0 3.5%;
+    margin: 20px auto;
 }
 
 .numbers-container {
@@ -240,7 +283,7 @@ a {
     column-gap: 20px;
     grid-template-columns: 1fr 1fr;
     max-width: 1240px;
-    padding: 0 20px;
+    padding: 0 3.5%;
     margin: 0 auto;
 }
 
@@ -397,9 +440,77 @@ a {
 
 
 
+@media (max-width: 1200px) {
+    .monthly-budget h2 {
+        font-size: 1.5rem;
+    }
+    .income-goal-title {
+        font-size: 1.5rem;
+    }
+}
 
+@media (max-width: 900px) {
+    .monthly-budget h2 {
+        font-size: 1.2rem;
+    }
+    .income-goal-title {
+        font-size: 1.2rem;
+    }
+    .income-goal-bar-amount {
+        font-size: 1.7rem;
+    }
+    .monthly-budget-amount {
+        font-size: 2rem;
+    }
+    .income-goal-bar {
+        height: 40px;
+        width: 70%;
+    }
+    .income-goal-progress {
+        height: 40px;
+    }
+}
 
+@media (max-width: 700px) {
+    .numbers-container {
+        flex-direction: column;
+    }
 
+    .total-number-label {
+        font-size: 1.35rem;
+    }
+
+    .numbers-container {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        row-gap: 0px;
+        grid-template-columns: 1fr;
+        padding: 0 10%;
+        margin: 0 auto;
+    }
+
+    .dashboard-container {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        row-gap: 20px;
+        grid-template-columns: 1fr;
+        padding: 0 10%;
+        margin: 20px auto;
+    }
+
+    .details-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        padding: 0 10%;
+        margin: 0 auto;
+        margin-top: 20px;
+    }
+
+    .monthly-budget-amount {
+        font-size: 2.5rem;
+    }
+}
 
 
 
