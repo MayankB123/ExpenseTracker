@@ -1,8 +1,8 @@
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const dotenv = require('dotenv').config();
 const app = express();
-const PORT = 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -14,7 +14,7 @@ app.set('view engine', 'html');
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.listen(
-    PORT,
+    process.env.PORT,
     () => {console.log("Started server")}
 );
 
