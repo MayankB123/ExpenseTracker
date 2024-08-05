@@ -5,8 +5,20 @@ let expenses;
 
 document.addEventListener('DOMContentLoaded', async () => {
 
+    function getLegendDisplay() {
+        return window.innerWidth >= 300; // Adjust the width as needed
+    }
     
     try {
+        const hamburgerMenu = document.getElementById("hamburgerMenu");
+        const mobileNavMenu = document.getElementById("mobileNavMenu");
+
+        hamburgerMenu.addEventListener("click", function() {
+            mobileNavMenu.classList.toggle("show");
+            console.log('Hello')
+        });
+
+
         const USD = document.getElementById('USD')
         const AUD = document.getElementById('AUD')
         const EUR = document.getElementById('EUR')
@@ -93,6 +105,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const descriptionCell = document.createElement('td');
             descriptionCell.textContent = item.description;
+            descriptionCell.classList.add("description")
             row.appendChild(descriptionCell);
 
             const amountCell = document.createElement('td');
@@ -145,8 +158,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                         }
                     },
                     legend: {
-                        display: true,
-                        position: 'top'
+                        display: getLegendDisplay(),
+                        position: 'top',
+                        font: {
+                            size: 10
+                        }
                     }
                 }
             }
@@ -189,31 +205,31 @@ document.addEventListener('DOMContentLoaded', async () => {
             textColor = 'green';
             const totalExpensesAmount = document.getElementById('totalExpensesAmount');
             if (currentCurrency == 'USD' || currentCurrency == 'AUD') {
-                totalExpensesAmount.innerHTML = `<div style="text-align: center; margin: 5px 0 5px 0; font-size: 1.5rem;">$${parseFloat(amount).toFixed(2)} <span style="color: rgb(93, 93, 93); font-size: 0.9rem;"> / $${parseInt(monthlyBudget)}.00</span></div>`;
+                totalExpensesAmount.innerHTML = `<h2 class="total-expenses-amount">$${parseFloat(amount).toFixed(2)} <span class="total-expenses-amount-span"> / $${parseInt(monthlyBudget)}.00</span></h2>`;
             } 
             else if (currentCurrency == 'EUR') {
-                totalExpensesAmount.innerHTML = `<div style="text-align: center; margin: 5px 0 5px 0; font-size: 1.5rem;">€${parseFloat(amount).toFixed(2)} <span style="color: rgb(93, 93, 93); font-size: 0.9rem;"> / €${parseInt(monthlyBudget)}.00</span></div>`;
+                totalExpensesAmount.innerHTML = `<h2 class="total-expenses-amount">€${parseFloat(amount).toFixed(2)} <span class="total-expenses-amount-span"> / €${parseInt(monthlyBudget)}.00</span></h2>`;
             }
             else if (currentCurrency == 'GBP') {
-                totalExpensesAmount.innerHTML = `<div style="text-align: center; margin: 5px 0 5px 0; font-size: 1.5rem;">£${parseFloat(amount).toFixed(2)} <span style="color: rgb(93, 93, 93); font-size: 0.9rem;"> / £${parseInt(monthlyBudget)}.00</span></div>`;
+                totalExpensesAmount.innerHTML = `<h2 class="total-expenses-amount">£${parseFloat(amount).toFixed(2)} <span class="total-expenses-amount-span"> / £${parseInt(monthlyBudget)}.00</span></h2>`;
             }
             else {
                 budgetH2.innerHTML = `₹${monthlyBudget}`
-                totalExpensesAmount.innerHTML = `<div style="text-align: center; margin: 5px 0 5px 0; font-size: 1.5rem;">₹${parseFloat(amount).toFixed(2)} <span style="color: rgb(93, 93, 93); font-size: 0.9rem;"> / ₹${parseInt(monthlyBudget)}.00</span></div>`;
+                totalExpensesAmount.innerHTML = `<h2 class="total-expenses-amount">₹${parseFloat(amount).toFixed(2)} <span class="total-expenses-amount-span"> / ₹${parseInt(monthlyBudget)}.00</span></h2>`;
             }
         } else {
             const totalExpensesAmount = document.getElementById('totalExpensesAmount');
             if (currentCurrency == 'USD' || currentCurrency == 'AUD') {
-                totalExpensesAmount.innerHTML = `<div style="text-align: center; margin: 5px 0 5px 0; font-size: 1.5rem; color: red;">$${parseFloat(amount).toFixed(2)}<span style="color: rgb(93, 93, 93); font-size: 0.9rem;"> / $${parseInt(monthlyBudget)}.00</span></div>`;
+                totalExpensesAmount.innerHTML = `<h2 class="total-expenses-amount-exceed">$${parseFloat(amount).toFixed(2)}<span class="total-expenses-amount-span"> / $${parseInt(monthlyBudget)}.00</span></h2>`;
             } 
             else if (currentCurrency == 'EUR') {
-                totalExpensesAmount.innerHTML = `<div style="text-align: center; margin: 5px 0 5px 0; font-size: 1.5rem; color: red;">€${parseFloat(amount).toFixed(2)}<span style="color: rgb(93, 93, 93); font-size: 0.9rem;"> / €${parseInt(monthlyBudget)}.00</span></div>`;
+                totalExpensesAmount.innerHTML = `<h2 class="total-expenses-amount-exceed">€${parseFloat(amount).toFixed(2)}<span class="total-expenses-amount-span"> / €${parseInt(monthlyBudget)}.00</span></div>`;
             }
             else if (currentCurrency == 'GBP') {
-                totalExpensesAmount.innerHTML = `<div style="text-align: center; margin: 5px 0 5px 0; font-size: 1.5rem; color: red;">£${parseFloat(amount).toFixed(2)}<span style="color: rgb(93, 93, 93); font-size: 0.9rem;"> / £${parseInt(monthlyBudget)}.00</span></div>`;
+                totalExpensesAmount.innerHTML = `<h2 class="total-expenses-amount-exceed"">£${parseFloat(amount).toFixed(2)}<span class="total-expenses-amount-span"> / £${parseInt(monthlyBudget)}.00</span></div>`;
             }
             else {
-                totalExpensesAmount.innerHTML = `<div style="text-align: center; margin: 5px 0 5px 0; font-size: 1.5rem; color: red;">₹${parseFloat(amount).toFixed(2)}<span style="color: rgb(93, 93, 93); font-size: 0.9rem;"> / ₹${parseInt(monthlyBudget)}.00</span></div>`;
+                totalExpensesAmount.innerHTML = `<h2 class="total-expenses-amount-exceed"">₹${parseFloat(amount).toFixed(2)}<span class="total-expenses-amount-span"> / ₹${parseInt(monthlyBudget)}.00</span></div>`;
             }
             
         }

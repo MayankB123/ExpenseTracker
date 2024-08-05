@@ -36,15 +36,25 @@
                     </div>
                 </div>
                 <span class="logout"><a href="/logout">Logout</a></span>
+                <div class="hamburger-menu" id="hamburgerMenu">
+                    &#9776;
+                </div>
             </div>
         </div>
     </header>
+    <div class="mobile-nav-menu" id="mobileNavMenu">
+        <ul>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/income">Income</a></li>
+            <li><a href="/expenses">Expenses</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </div>
 
     <!-- Main Content -->
     <main>
         <section class="dashboard-container">
             <section class="dashboard-summary">
-                <h2>THIS MONTH</h2>
                 <div class="total-expenses-label">Total expenses</div>
                 <div id="totalExpensesAmount" class="total-expenses-amount"></div>
                 <div class="pie-chart-container">
@@ -61,7 +71,7 @@
                         <tr>
                             <th>Date</th>
                             <th>Category</th>
-                            <th>Description</th>
+                            <th class="description">Description</th>
                             <th>Amount</th>
                         </tr>
                     </thead>
