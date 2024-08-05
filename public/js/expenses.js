@@ -1,12 +1,12 @@
 const categories = ['Rent', 'Groceries', 'Utilities', 'Entertainment', 'Travel', 'Savings', 'Debt Repayment', 'Healthcare', 'Transportation', 'Miscellaneous']
-const backgroundColors = ['#FF5733', '#33FF57', '#3357FF', '#F1C40F','#9B59B6', '#E67E22', '#1ABC9C', '#E74C3C', '#3498DB', '#2ECC71']
+const backgroundColors = ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)', 'rgba(255, 99, 71, 1)', 'rgba(148, 0, 211, 1)', 'rgba(255, 105, 180, 1)', 'rgba(0, 128, 128, 1)']
 const grey = '#D3D3D3'
 let expenses;
 
 document.addEventListener('DOMContentLoaded', async () => {
 
     function getLegendDisplay() {
-        return window.innerWidth >= 300; // Adjust the width as needed
+        return window.innerWidth >= 500; // Adjust the width as needed
     }
     
     try {
@@ -182,10 +182,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         expenses.forEach(item => {
             expenseDate = new Date(item.created_at)
             if (expenseDate.getMonth() == monthNow && expenseDate.getFullYear() == yearNow) {
+                // console.log(item)
             if (expenseMap[item.category]) {
-                expenseMap[item.category] += item.amount.toFixed(2);
+                expenseMap[item.category] += parseFloat(item.amount.toFixed(2));
+                // console.log(expenseMap[item.category])
             } else {
-                expenseMap[item.category] = item.amount.toFixed(2);
+                expenseMap[item.category] = parseFloat(item.amount.toFixed(2));
             }
             amount += item.amount;
             }
@@ -193,7 +195,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         Object.keys(expenseMap).forEach((category, index) => {
             labelsReference.push(category);
-            dataReference.push(expenseMap[category]);
+            dataReference.push(parseFloat(expenseMap[category].toFixed(2)));
             colorReference.push(backgroundColors[index % backgroundColors.length]); // Use modulo to avoid out of bounds
         });
 
@@ -267,4 +269,3 @@ document.addEventListener('DOMContentLoaded', async () => {
         URL.revokeObjectURL(url);
     };
 });
-

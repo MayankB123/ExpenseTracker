@@ -107,10 +107,10 @@
     <div id="incomesModal" class="modal">
         <div class="modal-content">
             <span id="closeIncomesModal" class="close">&times;</span>
-            <h2>Add Income</h2>
+            <h2 class="modal-title">Add Income</h2>
             <form id="incomesForm">
-                <label for="category">Category:</label>
-                <select id="category" name="category" required> 
+                <label class="modal-label" for="category">Category:</label>
+                <select class="modal-input" id="category" name="category" required> 
                     <option value="">Select a category</option>
                     <option value="Salary">Salary</option>
                     <option value="Side Hustle">Side Hustle</option>
@@ -119,11 +119,11 @@
                     <option value="Pension">Pension</option>
                 </select><br>
     
-                <label for="description">Description:</label>
-                <input type="text" id="description" name="description" maxlength="100" required><br><br>
+                <label class="modal-label" for="description">Description:</label>
+                <input class="modal-input" type="text" id="description" name="description" maxlength="100" required><br><br>
     
-                <label for="amount">Amount:</label>
-                <input type="number" id="amount" name="amount" step="0.01" required><br><br>
+                <label class="modal-label" for="amount">Amount:</label>
+                <input class="modal-input" type="number" id="amount" name="amount" step="0.01" required><br><br>
     
                 <button type="submit">Add Income</button>
             </form>
@@ -133,10 +133,10 @@
     <div id="incomeGoalModal" class="modal">
         <div class="modal-content">
             <span id="closeIncomeGoalModal" class="close">&times;</span>
-            <h2>Change Income Goal</h2>
+            <h2 class="modal-title">Change Income Goal</h2>
             <form id="incomeGoalForm">
-                <label for="incomeGoal">New Income Goal:</label>
-                <input type="number" id="incomeGoal" name="incomeGoal" required>
+                <label class="modal-label" for="incomeGoal">New Income Goal (USD):</label>
+                <input class="modal-input" type="number" id="incomeGoal" name="incomeGoal" placeholder="Enter Amount" required>
                 <button type="submit">Update Income Goal</button>
             </form>
         </div>
