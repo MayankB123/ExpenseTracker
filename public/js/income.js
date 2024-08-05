@@ -7,6 +7,14 @@ let incomes;
 document.addEventListener('DOMContentLoaded', async () => {
 
     try {        
+        const hamburgerMenu = document.getElementById("hamburgerMenu");
+        const mobileNavMenu = document.getElementById("mobileNavMenu");
+
+        hamburgerMenu.addEventListener("click", function() {
+            mobileNavMenu.classList.toggle("show");
+            console.log('Hello')
+        });
+
         const USD = document.getElementById('USD')
         const AUD = document.getElementById('AUD')
         const EUR = document.getElementById('EUR')
@@ -66,6 +74,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const descriptionCell = document.createElement('td');
             descriptionCell.textContent = item.description;
+            descriptionCell.classList.add('description')
             row.appendChild(descriptionCell);
 
             const amountCell = document.createElement('td');

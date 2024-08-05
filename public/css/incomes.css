@@ -203,6 +203,12 @@ header {
     text-decoration: none;
 }
 
+
+
+
+
+
+
 .user-profile {
     display: flex;
     align-items: center;
@@ -216,18 +222,21 @@ header {
 
 .dashboard-container {
     display: grid;
+    grid-template-rows: 1fr;
+    column-gap: 20px;
     grid-template-columns: 1fr 1fr;
-    align-items: center;
+    max-width: 1240px;
+    margin: 0 auto;
 }
 
 .wrapper {
-    padding: 20px;
+    padding: 35px 20px;
     max-width: 1200px;
     margin: 0 auto;
     background-color: #fff;
     border-radius: 8px;
     margin-top: 20px;
-    margin-bottom: 20px
+    margin-bottom: 20px;
 }
 
 .income-summary {
@@ -247,6 +256,11 @@ header {
     }
 }
 
+.dashboard-summary {
+    background-color: #fff;
+    border-radius: 8px;
+}
+
 .dashboard-summary h2 {
     text-align: center;
     margin: 0 0 5px 0;
@@ -263,7 +277,7 @@ header {
 .total-expenses-amount {
     text-align: center;
     margin: 5px 0 5px 0;
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: 300;
 }
 
@@ -290,6 +304,10 @@ header {
 
 @media (max-width: 1300px) {
     .details-container {
+        margin-left: 3.5%;
+        margin-right: 3.5%;
+    }
+    .dashboard-container {
         margin-left: 3.5%;
         margin-right: 3.5%;
     }
@@ -416,6 +434,85 @@ header {
     border-color: #fff; /* White border on hover */
 }
 
+@media (max-width: 900px) {
+    .numbers-container {
+        flex-direction: column;
+    }
+
+    .total-number-label {
+        font-size: 1.35rem;
+    }
+
+    .wrapper {
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+
+    .dashboard-container {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        row-gap: 20px;
+        grid-template-columns: 1fr;
+        padding: 0 10%;
+        margin: 0 auto;
+    }
+
+    .dashboard-summary {
+        padding: 30px;
+    }
+
+    .details-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        padding: 0 10%;
+        margin: 0 auto;
+        margin-top: 20px;
+    }
+
+    .monthly-budget-amount {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 650px) {
+    .description {
+        display: none;
+    }
+
+    .dashboard-summary {
+        padding: 20px;
+    }
+
+    .expenses-container {
+        height: 325px;
+    }
+    
+    .monthly-budget {
+        height: 325px;
+    }
+
+    .monthly-budget-amount {
+        margin: 25px 0px
+    }
+
+    .button {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 450px) {
+    .dashboard-summary {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 400px) {
+    .dashboard-summary {
+        padding: 5px;
+    }
+}
 
 
 
