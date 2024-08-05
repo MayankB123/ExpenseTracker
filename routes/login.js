@@ -47,13 +47,13 @@ router.post('/', async (req, res) => {
 
             res.cookie('accessToken', accessToken, {
                 httpOnly: true,
-                secure: false, 
+                secure: process.env.NODE_ENV === 'production', 
                 sameSite: 'Strict',
                 });
             
             res.cookie('refreshToken', refreshToken, {
                 httpOnly: true,
-                secure: false,
+                secure: process.env.NODE_ENV === 'production',
                 sameSite: 'Strict', 
                 });
             
