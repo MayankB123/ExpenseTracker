@@ -219,6 +219,7 @@ header {
     grid-template-columns: 1fr 1fr;
     max-width: 1240px;
     margin: 0 auto;
+    margin-bottom: 20px;
 }
 
 .wrapper {
@@ -530,6 +531,20 @@ header {
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
+.modal-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.modal-label {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.modal-input {
+    height: 20px;
+}
+
 /* Modal Content */
 .modal-content {
     background-color: #fefefe;
@@ -537,6 +552,12 @@ header {
     padding: 20px;
     border: 1px solid #888;
     width: 50%; /* Could be more or less, depending on screen size */
+}
+
+@media (max-width: 800px) {
+    .modal-content {
+        width: 70% !important;
+    }
 }
 
 /* The Close Button */
@@ -558,6 +579,7 @@ header {
 form {
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 input[type="number"] {

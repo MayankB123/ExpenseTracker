@@ -95,10 +95,10 @@
     <div id="budgetModal" class="modal">
         <div class="modal-content">
             <span id="closeBudgetModal" class="close">&times;</span>
-            <h2>Change Monthly Budget</h2>
+            <h2 class="modal-title">Change Monthly Budget</h2>
             <form id="budgetForm">
-                <label for="budget">New Budget:</label>
-                <input type="number" id="budget" name="budget" required>
+                <label class="modal-label" for="budget">New Budget:</label>
+                <input class="modal-input" type="number" id="budget" name="budget" required>
                 <button type="submit">Update Budget</button>
             </form>
         </div>
@@ -107,10 +107,10 @@
     <div id="expensesModal" class="modal">
         <div class="modal-content">
             <span id="closeExpensesModal" class="close">&times;</span>
-            <h2>Add Expense</h2>
+            <h2 class="modal-title">Add Expense</h2>
             <form id="expensesForm">
-                <label for="category">Category:</label>
-                <select id="category" name="category" required> 'Rent', 'Groceries', 'Utilities', 'Entertainment', 'Leisure', 'Travel', 'Savings', 'Debt Repayment', 'Healthcare', 'Transportation', 'Miscellaneous'
+                <label class="modal-label" for="category">Category:</label>
+                <select class="modal-input" id="category" name="category" required> 'Rent', 'Groceries', 'Utilities', 'Entertainment', 'Leisure', 'Travel', 'Savings', 'Debt Repayment', 'Healthcare', 'Transportation', 'Miscellaneous'
                     <option value="">Select a category</option>
                     <option value="Housing">Housing</option>
                     <option value="Groceries">Groceries</option>
@@ -124,11 +124,11 @@
                     <option value="Miscellaneous">Miscellaneous</option>
                 </select><br>
     
-                <label for="description">Description:</label>
-                <input type="text" id="description" name="description" maxlength="100" required><br><br>
+                <label class="modal-label" for="description">Description:</label>
+                <input class="modal-input" type="text" id="description" name="description" maxlength="100" required><br><br>
     
-                <label for="amount">Amount:</label>
-                <input type="number" id="amount" name="amount" step="0.01" required><br><br>
+                <label class="modal-label" for="amount">Amount:</label>
+                <input class="modal-input" type="number" id="amount" name="amount" step="0.01" required><br><br>
     
                 <button type="submit">Add Expense</button>
             </form>
