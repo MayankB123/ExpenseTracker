@@ -18,6 +18,10 @@ app.listen(
     () => {console.log("Started server")}
 );
 
+app.get('/', (req, res) => {
+    res.status(200).redirect('/login');
+});
+
 const loginRouter = require('./routes/login');
 const logoutRouter = require('./routes/logout');
 const registerRouter = require('./routes/register');
