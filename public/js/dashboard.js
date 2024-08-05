@@ -6,6 +6,14 @@ const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
 document.addEventListener('DOMContentLoaded', async () => {
 
     try {    
+        const hamburgerMenu = document.getElementById("hamburgerMenu");
+        const mobileNavMenu = document.getElementById("mobileNavMenu");
+
+        hamburgerMenu.addEventListener("click", function() {
+            mobileNavMenu.classList.toggle("show");
+            console.log('Hello')
+        });
+
         const now = new Date();
         const day = now.getDate()
         const month = now.getMonth();

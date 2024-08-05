@@ -23,6 +23,150 @@ header {
     background-color: #3A4744;
     color: #fff;
     padding: 15px 0;
+    min-width: 100vw;
+}
+
+/* Hamburger menu */
+.hamburger-menu {
+    display: none;
+    font-size: 30px;
+    cursor: pointer;
+    color: white;
+}
+
+/* Mobile navigation menu */
+.mobile-nav-menu {
+    display: none;
+    background-color: #3A4744;
+    padding: 10px 0;
+}
+
+.mobile-nav-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+.mobile-nav-menu ul li {
+    margin: 10px 0;
+}
+
+.mobile-nav-menu ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+@media (max-width: 1350px) {
+    .header-content {
+        margin-left: 3.5%;
+        margin-right: 3.5%;
+    }
+}
+
+/* Show hamburger menu on small screens */
+@media (max-width: 900px) {
+    .nav-menu {
+        display: none;
+    }
+    
+    .hamburger-menu {
+        display: block;
+    }
+
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .header-content {
+        min-height: 8vh;
+        padding: 0px 40px !important; 
+        grid-template-columns: 1fr 1fr;
+        justify-content: space-between;
+    }
+
+    .user-profile {
+        display: none;
+    }
+
+    .user-profile span {
+        display: none;
+    }
+
+    .dropbtn {
+        font-size: 1rem !important;
+        margin-right: 20px;
+        padding: 10px;
+    }
+
+    .logo h1 {
+        font-size: 1.65rem;
+    }
+
+    .nav-menu ul {
+        gap: 10px;
+        font-size: 1rem;
+    }
+    
+}
+
+@media (max-width: 450px) {
+
+    .header-content {
+        padding: 0px 20px !important; 
+    }
+
+    .dropbtn {
+        font-size: 1rem !important;
+        margin-right: 20px;
+    }
+
+    .logo h1 {
+        font-size: 1.45rem !important;
+    }
+}
+
+@media (max-width: 390px) {
+
+    .dropbtn {
+        font-size: 0.9rem !important;
+        margin-right: 20px;
+    }
+
+    .logo h1 {
+        font-size: 1.3rem !important;
+    }
+}
+
+@media (max-width: 360px) {
+
+    .dropbtn {
+        font-size: 0.85rem !important;
+        margin-right: 20px;
+    }
+
+    .logo h1 {
+        font-size: 1.1rem !important;
+    }
+}
+
+@media (max-width: 320px) {
+
+    .dropbtn {
+        font-size: 0.8rem !important;
+        margin-right: 20px;
+    }
+
+    .logo h1 {
+        font-size: 0.95rem !important;
+    }
+}
+
+.mobile-nav-menu.show {
+    display: block;
 }
 
 .header-content {
@@ -33,7 +177,16 @@ header {
     margin: 0 auto;
     padding: 0 20px;
     box-sizing: border-box;
+    min-height: 6vh;
 }
+
+.dropbtn {
+    background-color: #3A4744;
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+  }
 
 .logo h1 {
     margin: 0;
@@ -54,24 +207,11 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100px;
 }
+
 
 .username {
     color: #fff;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .header-content {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .nav-menu ul {
-        flex-direction: column;
-        gap: 10px;
-    }
 }
 
 .dashboard-container {
@@ -101,6 +241,10 @@ header {
         margin-left: 3.5%;
         margin-right: 3.5%;
     }
+    .wrapper {
+        margin-left: 3.5%;
+        margin-right: 3.5%;
+    }
 }
 
 .dashboard-summary h2 {
@@ -119,7 +263,8 @@ header {
 .total-expenses-amount {
     text-align: center;
     margin: 5px 0 5px 0;
-    font-size: 1.5rem;
+    font-size: 2rem;
+    font-weight: 300;
 }
 
 .bar-chart-container {
